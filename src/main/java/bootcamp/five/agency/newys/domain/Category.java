@@ -3,6 +3,7 @@ package bootcamp.five.agency.newys.domain;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Category {
   @JoinColumn(name = "author_id", referencedColumnName = "id")
   private Author author;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "added_articles",
       joinColumns = @JoinColumn(name = "category_id"),
@@ -39,19 +40,16 @@ public class Category {
   public Category() {
   }
 
-  public Category(Long id, String name, String description, Author author) {
+  public Category(Long id, String name, String description, Author author, List<Article> addedArticles) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.author = author;
+    this.addedArticles = addedArticles;
   }
 
   public Long getId() {
     return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -84,5 +82,44 @@ public class Category {
 
   public void setAddedArticles(List<Article> addedArticles) {
     this.addedArticles = addedArticles;
+  }
+
+  public static class CategoryBuilder {
+
+    private Long id;
+    private String name;
+    private String description;
+    private Author author;
+    private List<Article> addedArticles;
+
+    public CategoryBuilder id(Long id) {
+      this.id = id;
+      return this;
+    }
+
+    public CategoryBuilder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public CategoryBuilder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public CategoryBuilder author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    public CategoryBuilder addedArticles(List<Article> addedArticles) {
+      this.addedArticles = addedArticles;
+      return this;
+    }
+
+    public Category build() {
+      return new Category(id, name, description, author, addedArticles);
+    }
+
   }
 }

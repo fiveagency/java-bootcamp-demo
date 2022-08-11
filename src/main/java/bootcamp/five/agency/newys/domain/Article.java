@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,13 +41,14 @@ public class Article {
   @JoinColumn(name = "author_id", referencedColumnName = "id")
   private Author author;
 
-  @ManyToMany(mappedBy = "addedArticles")
+  @ManyToMany(mappedBy = "addedArticles", fetch = FetchType.EAGER)
   private List<Category> categories;
 
   public Article() {
   }
 
-  public Article(Long id, String title, String description, String imageUrl, Date dateOfPublication, String content, int numLikes, Author author) {
+  public Article(Long id, String title, String description, String imageUrl, Date dateOfPublication, String content, int numLikes, Author author,
+      List<Category> categories) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -55,54 +57,31 @@ public class Article {
     this.content = content;
     this.numLikes = numLikes;
     this.author = author;
+    this.categories = categories;
   }
 
   public Long getId() {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public String getTitle() {
     return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
   }
 
   public String getDescription() {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   public String getImageUrl() {
     return imageUrl;
-  }
-
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
   }
 
   public Date getDateOfPublication() {
     return dateOfPublication;
   }
 
-  public void setDateOfPublication(Date dateOfPublication) {
-    this.dateOfPublication = dateOfPublication;
-  }
-
   public String getContent() {
     return content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
   }
 
   public int getNumLikes() {
@@ -125,7 +104,66 @@ public class Article {
     return categories;
   }
 
-  public void setCategories(List<Category> categories) {
-    this.categories = categories;
+  public static class ArticleBuilder {
+
+    private Long id;
+    private String title;
+    private String description;
+    private String imageUrl;
+    private Date dateOfPublication;
+    private String content;
+    private int numLikes;
+    private Author author;
+    private List<Category> categories;
+
+    public ArticleBuilder id(Long id) {
+      this.id = id;
+      return this;
+    }
+
+    public ArticleBuilder title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public ArticleBuilder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public ArticleBuilder imageUrl(String imageUrl) {
+      this.imageUrl = imageUrl;
+      return this;
+    }
+
+    public ArticleBuilder dateOfPublication(Date dateOfPublication) {
+      this.dateOfPublication = dateOfPublication;
+      return this;
+    }
+
+    public ArticleBuilder content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    public ArticleBuilder numLikes(int numLikes) {
+      this.numLikes = numLikes;
+      return this;
+    }
+
+    public ArticleBuilder author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    public ArticleBuilder categories(List<Category> categories) {
+      this.categories = categories;
+      return this;
+    }
+
+    public Article build() {
+      return new Article(id, title, description, imageUrl, dateOfPublication, content, numLikes, author, categories);
+    }
+
   }
 }

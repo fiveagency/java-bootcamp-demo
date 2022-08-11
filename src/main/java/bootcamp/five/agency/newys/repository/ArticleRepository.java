@@ -12,6 +12,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
   List<Article> findByDateOfPublicationAfter(Date dateOfPublication);
 
-  List<Article> findByNumLikesGreaterThan(long numLikes);
+  List<Article> findByNumLikesGreaterThan(int numLikes);
 
 }
