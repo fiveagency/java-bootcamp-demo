@@ -23,8 +23,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
 
   Author findAuthorByEmail(String email);
 
-  Author findAuthorByType(String type);
-
   List<Author> findByType(String type);
 
 }

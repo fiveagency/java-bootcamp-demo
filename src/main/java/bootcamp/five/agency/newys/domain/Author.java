@@ -3,6 +3,7 @@ package bootcamp.five.agency.newys.domain;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class Author {
   @Column(name = "type")
   private String type;
 
-  @OneToMany(mappedBy = "author")
+  @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
   private List<Article> articles;
 
   @OneToMany(mappedBy = "author")
@@ -36,16 +37,14 @@ public class Author {
   public Author() {
   }
 
-  public Author(Long id, String firstName, String lastName, String email, String type) {
+  private Author(Long id, String firstName, String lastName, String email, String type, List<Article> articles, List<Category> categories) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.type = type;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
+    this.articles = articles;
+    this.categories = categories;
   }
 
   public Long getId() {
@@ -56,47 +55,74 @@ public class Author {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
   public String getLastName() {
     return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
   }
 
   public String getEmail() {
     return email;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
   public String getType() {
     return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 
   public List<Article> getArticles() {
     return articles;
   }
 
-  public void setArticles(List<Article> articles) {
-    this.articles = articles;
-  }
-
   public List<Category> getCategories() {
     return categories;
   }
 
-  public void setCategories(List<Category> categories) {
-    this.categories = categories;
+  public static class AuthorBuilder {
+
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String type;
+    private List<Article> articles;
+    private List<Category> categories;
+
+    public AuthorBuilder id(Long id) {
+      this.id = id;
+      return this;
+    }
+
+    public AuthorBuilder firstName(String firstName) {
+      this.firstName = firstName;
+      return this;
+    }
+
+    public AuthorBuilder lastName(String lastName) {
+      this.lastName = lastName;
+      return this;
+    }
+
+    public AuthorBuilder email(String email) {
+      this.email = email;
+      return this;
+    }
+
+    public AuthorBuilder type(String type) {
+      this.type = type;
+      return this;
+    }
+
+    public AuthorBuilder articles(List<Article> articles) {
+      this.articles = articles;
+      return this;
+    }
+
+    public AuthorBuilder categories(List<Category> categories) {
+      this.categories = categories;
+      return this;
+    }
+
+    public Author build() {
+      return new Author(id, firstName, lastName, email, type, articles, categories);
+    }
   }
+
 }
