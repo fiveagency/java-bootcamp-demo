@@ -3,6 +3,8 @@ package bootcamp.five.agency.newys.services.category;
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.domain.Category;
+import bootcamp.five.agency.newys.dto.response.CategoryResponseDto;
+import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
@@ -15,25 +17,28 @@ public class UpdateCategoryService {
   private final CategoryRepository categoryRepository;
   private final AuthorRepository authorRepository;
   private final ArticleRepository articleRepository;
+  private final CategoryMapper categoryMapper;
 
   @Autowired
-  public UpdateCategoryService(AuthorRepository authorRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository) {
+  public UpdateCategoryService(AuthorRepository authorRepository, CategoryRepository categoryRepository, ArticleRepository articleRepository,
+      CategoryMapper categoryMapper) {
     this.categoryRepository = categoryRepository;
     this.authorRepository = authorRepository;
     this.articleRepository = articleRepository;
+    this.categoryMapper = categoryMapper;
   }
 
-  public Category updateCategory(Long id, String name, String description) {
+  public CategoryResponseDto updateCategory(Long id, String name, String description) {
     Category category = categoryRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Category does not exists"));
 
     category.setName(name);
     category.setDescription(description);
 
-    return categoryRepository.save(category);
+    return categoryMapper.convertToCategoryResponseDto(categoryRepository.save(category));
   }
 
-  public Category changeCategoryAuthor(Long id, Long authorId) {
+  public CategoryResponseDto changeCategoryAuthor(Long id, Long authorId) {
     Category category = categoryRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Category does not exists"));
 
@@ -42,10 +47,10 @@ public class UpdateCategoryService {
 
     category.setAuthor(author);
 
-    return categoryRepository.save(category);
+    return categoryMapper.convertToCategoryResponseDto(categoryRepository.save(category));
   }
 
-  public Category addArticleToCategory(Long id, Long articleId) {
+  public CategoryResponseDto addArticleToCategory(Long id, Long articleId) {
     Category category = categoryRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Category does not exists"));
 
@@ -58,7 +63,7 @@ public class UpdateCategoryService {
 
     category.getAddedArticles().add(article);
 
-    return categoryRepository.save(category);
+    return categoryMapper.convertToCategoryResponseDto(categoryRepository.save(category));
   }
 
 }

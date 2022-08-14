@@ -1,10 +1,14 @@
 package bootcamp.five.agency.newys.services.category;
 
 import bootcamp.five.agency.newys.domain.Author;
-import bootcamp.five.agency.newys.domain.Category;
+import bootcamp.five.agency.newys.dto.response.CategoryResponseDto;
+import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,27 +17,33 @@ public class GetCategoryService {
 
   private final CategoryRepository categoryRepository;
   private final AuthorRepository authorRepository;
+  private final CategoryMapper categoryMapper;
 
   @Autowired
-  public GetCategoryService(CategoryRepository categoryRepository, AuthorRepository authorRepository) {
+  public GetCategoryService(CategoryRepository categoryRepository, AuthorRepository authorRepository, CategoryMapper categoryMapper) {
     this.categoryRepository = categoryRepository;
     this.authorRepository = authorRepository;
+    this.categoryMapper = categoryMapper;
   }
 
-  public Category getCategoryById(Long id) {
-    return categoryRepository.findById(id)
-        .orElseThrow(() -> new IllegalStateException("Category does not exists"));
+  public CategoryResponseDto getCategoryById(Long id) {
+    return categoryMapper.convertToCategoryResponseDto(categoryRepository.findById(id)
+        .orElseThrow(() -> new IllegalStateException("Category does not exists")));
   }
 
-  public List<Category> getCategoriesByAuthor(Long authorId) {
+  public List<CategoryResponseDto> getCategoriesByAuthor(Long authorId) {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return categoryRepository.findByAuthor(author);
+    return Optional.ofNullable(categoryRepository.findByAuthor(author))
+        .map(entities -> entities.stream().map(categoryMapper::convertToCategoryResponseDto).collect(Collectors.toList()))
+        .orElse(new ArrayList<>());
   }
 
-  public List<Category> getAll() {
-    return categoryRepository.findAll();
+  public List<CategoryResponseDto> getAll() {
+    return Optional.of(categoryRepository.findAll())
+        .map(entities -> entities.stream().map(categoryMapper::convertToCategoryResponseDto).collect(Collectors.toList()))
+        .orElse(new ArrayList<>());
   }
 
 }

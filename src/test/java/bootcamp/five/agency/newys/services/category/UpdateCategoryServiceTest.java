@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.domain.Category;
+import bootcamp.five.agency.newys.dto.response.CategoryResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +19,11 @@ public class UpdateCategoryServiceTest {
     final String name = "Tech";
     final String description = "Tech category";
 
-    Category category = updateCategoryService.updateCategory(id, name, description);
+    CategoryResponseDto categoryResponseDto = updateCategoryService.updateCategory(id, name, description);
 
-    assertThat(category.getId().equals(id));
-    assertThat(category.getName().equals(name));
-    assertThat(category.getDescription().equals(description));
+    assertThat(categoryResponseDto.getId().equals(id));
+    assertThat(categoryResponseDto.getName().equals(name));
+    assertThat(categoryResponseDto.getDescription().equals(description));
   }
 
   @Test
@@ -31,9 +31,9 @@ public class UpdateCategoryServiceTest {
     final Long id = 1L;
     final Long authorId = 2L;
 
-    Category category = updateCategoryService.changeCategoryAuthor(id, authorId);
+    CategoryResponseDto categoryResponseDto = updateCategoryService.changeCategoryAuthor(id, authorId);
 
-    assertThat(category.getAuthor().getId().equals(authorId));
+    assertThat(categoryResponseDto.getAuthorId().equals(authorId));
   }
 
   @Test
@@ -41,9 +41,9 @@ public class UpdateCategoryServiceTest {
     final Long id = 1L;
     final Long articleId = 1L;
 
-    Category category = updateCategoryService.addArticleToCategory(id, articleId);
+    CategoryResponseDto categoryResponseDto = updateCategoryService.addArticleToCategory(id, articleId);
 
-    assertThat(category.getAddedArticles().stream().anyMatch(article -> article.getId().equals(articleId)));
+    assertThat(categoryResponseDto.getAddedArticles().stream().anyMatch(article -> article.getId().equals(articleId)));
   }
 
 }
