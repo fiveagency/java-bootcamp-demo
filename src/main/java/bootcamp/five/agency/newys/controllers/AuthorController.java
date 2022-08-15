@@ -53,12 +53,12 @@ public class AuthorController {
     @PutMapping("/author/{id}/update")
     public ResponseEntity<HttpStatus> updateAuthor(@PathVariable Long id, @RequestBody Author author) {
         updateAuthorService.updateAuthor(id, author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/author/{id}/delete")
     public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable Long id) {
         deleteAuthorService.deleteAuthorById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
