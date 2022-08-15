@@ -1,6 +1,6 @@
 package bootcamp.five.agency.newys.services.author;
 
-import bootcamp.five.agency.newys.dto.response.AuthorResponseDto;
+import bootcamp.five.agency.newys.dto.response.author.GetAuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import java.util.ArrayList;
@@ -22,17 +22,17 @@ public class GetAuthorService {
     this.authorMapper = authorMapper;
   }
 
-  public AuthorResponseDto getAuthorById(Long id) {
-    return authorMapper.convertToAuthorResponseDto(authorRepository.findById(id)
+  public GetAuthorDetailsResponseDto getAuthorById(Long id) {
+    return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Author does not exists")));
   }
 
-  public AuthorResponseDto getAuthorByFirstNameAndLastName(String firstName, String lastName) {
-    return authorMapper.convertToAuthorResponseDto(authorRepository.findAuthorByFirstNameAndLastName(firstName, lastName));
+  public GetAuthorDetailsResponseDto getAuthorByFirstNameAndLastName(String firstName, String lastName) {
+    return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.findAuthorByFirstNameAndLastName(firstName, lastName));
   }
 
-  public AuthorResponseDto getAuthorByEmail(String email) {
-    return authorMapper.convertToAuthorResponseDto(authorRepository.findAuthorByEmail(email));
+  public GetAuthorDetailsResponseDto getAuthorByEmail(String email) {
+    return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.findAuthorByEmail(email));
   }
 
   public Integer getNumberOfArticles(Long id) {
@@ -41,15 +41,15 @@ public class GetAuthorService {
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
   }
 
-  public List<AuthorResponseDto> getByType(String type) {
+  public List<GetAuthorDetailsResponseDto> getByType(String type) {
     return Optional.ofNullable(authorRepository.findByType(type))
-        .map(entities -> entities.stream().map(authorMapper::convertToAuthorResponseDto).collect(Collectors.toList()))
+        .map(entities -> entities.stream().map(authorMapper::convertToGetAuthorDetailsResponseDto).collect(Collectors.toList()))
         .orElse(new ArrayList<>());
   }
 
-  public List<AuthorResponseDto> getAll() {
+  public List<GetAuthorDetailsResponseDto> getAll() {
     return Optional.of(authorRepository.findAll())
-        .map(entities -> entities.stream().map(authorMapper::convertToAuthorResponseDto).collect(Collectors.toList()))
+        .map(entities -> entities.stream().map(authorMapper::convertToGetAuthorDetailsResponseDto).collect(Collectors.toList()))
         .orElse(new ArrayList<>());
   }
 

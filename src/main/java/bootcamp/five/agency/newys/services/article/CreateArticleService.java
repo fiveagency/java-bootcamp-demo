@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.article;
 
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Author;
-import bootcamp.five.agency.newys.dto.response.ArticleResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
@@ -25,11 +25,11 @@ public class CreateArticleService {
     this.articleMapper = articleMapper;
   }
 
-  public ArticleResponseDto createArticle(String title, String description, String imageUrl, Date dateOfPublication, String content, Long authorId) {
+  public GetArticleDetailsResponseDto createArticle(String title, String description, String imageUrl, Date dateOfPublication, String content, Long authorId) {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return articleMapper.convertToArticleResponseDto(articleRepository.save(new Article.ArticleBuilder()
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(new Article.ArticleBuilder()
         .title(title)
         .description(description)
         .imageUrl(imageUrl)

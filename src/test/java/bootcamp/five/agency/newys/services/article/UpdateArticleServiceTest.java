@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.dto.response.ArticleResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,13 +23,13 @@ public class UpdateArticleServiceTest {
     final String imageUrl = "images/samsung.png";
     final String content = "New Samsung announced";
 
-    ArticleResponseDto articleResponseDto = updateArticleService.updateArticle(id, title, description, imageUrl, content);
+    GetArticleDetailsResponseDto getArticleDetailsResponseDto = updateArticleService.updateArticle(id, title, description, imageUrl, content);
 
-    assertThat(articleResponseDto.getId().equals(id));
-    assertThat(articleResponseDto.getTitle().equals(title));
-    assertThat(articleResponseDto.getDescription().equals(description));
-    assertThat(articleResponseDto.getImageUrl().equals(imageUrl));
-    assertThat(articleResponseDto.getContent().equals(content));
+    assertThat(getArticleDetailsResponseDto.getId().equals(id));
+    assertThat(getArticleDetailsResponseDto.getTitle().equals(title));
+    assertThat(getArticleDetailsResponseDto.getDescription().equals(description));
+    assertThat(getArticleDetailsResponseDto.getImageUrl().equals(imageUrl));
+    assertThat(getArticleDetailsResponseDto.getContent().equals(content));
   }
 
   @Test
@@ -37,31 +37,31 @@ public class UpdateArticleServiceTest {
     final Long id = 1L;
     final Long authorId = 2L;
 
-    ArticleResponseDto articleResponseDto = updateArticleService.changeArticleAuthor(id, authorId);
+    GetArticleDetailsResponseDto getArticleDetailsResponseDto = updateArticleService.changeArticleAuthor(id, authorId);
 
-    assertThat(articleResponseDto.getAuthorId().equals(authorId));
+    assertThat(getArticleDetailsResponseDto.getAuthorId().equals(authorId));
   }
 
   @Test
   public void likeArticle_ArticleLiked_True() {
     final Long id = 1L;
 
-    ArticleResponseDto articleResponseDto = getArticleService.getArticleById(id);
+    GetArticleDetailsResponseDto getArticleDetailsResponseDto = getArticleService.getArticleById(id);
 
-    ArticleResponseDto likedArticleResponseDto = updateArticleService.likeArticle(id);
+    GetArticleDetailsResponseDto likedGetArticleDetailsResponseDto = updateArticleService.likeArticle(id);
 
-    assertThat(articleResponseDto.getNumLikes() < likedArticleResponseDto.getNumLikes());
+    assertThat(getArticleDetailsResponseDto.getNumLikes() < likedGetArticleDetailsResponseDto.getNumLikes());
   }
 
   @Test
   public void unlikeArticle_ArticleUnlike_True() {
     final Long id = 1L;
 
-    ArticleResponseDto articleResponseDto = getArticleService.getArticleById(id);
+    GetArticleDetailsResponseDto getArticleDetailsResponseDto = getArticleService.getArticleById(id);
 
-    ArticleResponseDto unlikedArticleResponseDto = updateArticleService.unlikeArticle(id);
+    GetArticleDetailsResponseDto unlikedGetArticleDetailsResponseDto = updateArticleService.unlikeArticle(id);
 
-    assertThat(articleResponseDto.getNumLikes() < unlikedArticleResponseDto.getNumLikes());
+    assertThat(getArticleDetailsResponseDto.getNumLikes() > unlikedGetArticleDetailsResponseDto.getNumLikes());
   }
 
 }

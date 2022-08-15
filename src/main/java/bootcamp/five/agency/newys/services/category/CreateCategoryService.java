@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.category;
 
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.domain.Category;
-import bootcamp.five.agency.newys.dto.response.CategoryResponseDto;
+import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
@@ -24,11 +24,11 @@ public class CreateCategoryService {
     this.categoryMapper = categoryMapper;
   }
 
-  public CategoryResponseDto createCategory(String name, String description, Long authorId) {
+  public GetCategoryDetailsResponseDto createCategory(String name, String description, Long authorId) {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return categoryMapper.convertToCategoryResponseDto(categoryRepository.save(new Category.CategoryBuilder()
+    return categoryMapper.convertToGetCategoryDetailsResponseDto(categoryRepository.save(new Category.CategoryBuilder()
         .name(name)
         .description(description)
         .author(author)

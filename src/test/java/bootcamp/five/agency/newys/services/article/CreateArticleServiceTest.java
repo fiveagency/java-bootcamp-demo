@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.dto.response.ArticleResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +23,15 @@ public class CreateArticleServiceTest {
     final String content = "New iPhone announced";
     final Long authorId = 1L;
 
-    ArticleResponseDto articleResponseDto = createArticleService.createArticle(title, description, imageUrl, dateOfPublication, content, authorId);
+    GetArticleDetailsResponseDto getArticleDetailsResponseDto = createArticleService.createArticle(title, description, imageUrl, dateOfPublication, content, authorId);
 
-    assertThat(articleResponseDto.getId() != null);
-    assertThat(articleResponseDto.getTitle().equals(title));
-    assertThat(articleResponseDto.getDescription().equals(description));
-    assertThat(articleResponseDto.getImageUrl().equals(imageUrl));
-    assertThat(articleResponseDto.getDateOfPublication().equals(dateOfPublication));
-    assertThat(articleResponseDto.getContent().equals(content));
-    assertThat(articleResponseDto.getAuthorId().equals(authorId));
+    assertThat(getArticleDetailsResponseDto.getId() != null);
+    assertThat(getArticleDetailsResponseDto.getTitle().equals(title));
+    assertThat(getArticleDetailsResponseDto.getDescription().equals(description));
+    assertThat(getArticleDetailsResponseDto.getImageUrl().equals(imageUrl));
+    assertThat(getArticleDetailsResponseDto.getDateOfPublication().equals(dateOfPublication));
+    assertThat(getArticleDetailsResponseDto.getContent().equals(content));
+    assertThat(getArticleDetailsResponseDto.getAuthorId().equals(authorId));
   }
 
 }
