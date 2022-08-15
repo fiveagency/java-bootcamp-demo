@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.article;
 
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Author;
-import bootcamp.five.agency.newys.dto.response.ArticleResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
@@ -23,11 +23,11 @@ public class UpdateArticleService {
     this.articleMapper = articleMapper;
   }
 
-  public ArticleResponseDto updateArticle(Long id, String title, String description, String imageUrl, String content) {
+  public GetArticleDetailsResponseDto updateArticle(Long id, String title, String description, String imageUrl, String content) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
-    return articleMapper.convertToArticleResponseDto(articleRepository.save(new Article.ArticleBuilder()
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(new Article.ArticleBuilder()
         .id(article.getId())
         .title(title)
         .description(description)
@@ -40,7 +40,7 @@ public class UpdateArticleService {
         .build()));
   }
 
-  public ArticleResponseDto changeArticleAuthor(Long id, Long authorId) {
+  public GetArticleDetailsResponseDto changeArticleAuthor(Long id, Long authorId) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
@@ -49,25 +49,25 @@ public class UpdateArticleService {
 
     article.setAuthor(author);
 
-    return articleMapper.convertToArticleResponseDto(articleRepository.save(article));
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(article));
   }
 
-  public ArticleResponseDto likeArticle(Long id) {
+  public GetArticleDetailsResponseDto likeArticle(Long id) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
-    article.setNumLikes(article.getNumLikes()+1);
+    article.setNumLikes(article.getNumLikes() + 1);
 
-    return articleMapper.convertToArticleResponseDto(articleRepository.save(article));
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(article));
   }
 
-  public ArticleResponseDto unlikeArticle(Long id) {
+  public GetArticleDetailsResponseDto unlikeArticle(Long id) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
-    article.setNumLikes(article.getNumLikes()-1);
+    article.setNumLikes(article.getNumLikes() - 1);
 
-    return articleMapper.convertToArticleResponseDto(articleRepository.save(article));
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(article));
   }
 
 }

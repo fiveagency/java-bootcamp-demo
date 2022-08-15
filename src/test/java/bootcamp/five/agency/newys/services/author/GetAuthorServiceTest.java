@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.author;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.dto.response.AuthorResponseDto;
+import bootcamp.five.agency.newys.dto.response.author.GetAuthorDetailsResponseDto;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,9 @@ public class GetAuthorServiceTest {
   public void getAuthorById_AuthorFetched_True() {
     final Long id = 1L;
 
-    AuthorResponseDto authorResponseDto = getAuthorService.getAuthorById(id);
+    GetAuthorDetailsResponseDto getAuthorDetailsResponseDto = getAuthorService.getAuthorById(id);
 
-    assertThat(authorResponseDto.getId().equals(id));
+    assertThat(getAuthorDetailsResponseDto.getId().equals(id));
   }
 
   @Test
@@ -28,19 +28,19 @@ public class GetAuthorServiceTest {
     final String firstName = "John";
     final String lastName = "Doe";
 
-    AuthorResponseDto authorResponseDto = getAuthorService.getAuthorByFirstNameAndLastName(firstName, lastName);
+    GetAuthorDetailsResponseDto getAuthorDetailsResponseDto = getAuthorService.getAuthorByFirstNameAndLastName(firstName, lastName);
 
-    assertThat(authorResponseDto.getFirstName().equals(firstName));
-    assertThat(authorResponseDto.getLastName().equals(lastName));
+    assertThat(getAuthorDetailsResponseDto.getFirstName().equals(firstName));
+    assertThat(getAuthorDetailsResponseDto.getLastName().equals(lastName));
   }
 
   @Test
   public void getAuthorByEmail_AuthorFetched_True() {
     final String email = "john.doe@mail.com";
 
-    AuthorResponseDto authorResponseDto = getAuthorService.getAuthorByEmail(email);
+    GetAuthorDetailsResponseDto getAuthorDetailsResponseDto = getAuthorService.getAuthorByEmail(email);
 
-    assertThat(authorResponseDto.getEmail().equals(email));
+    assertThat(getAuthorDetailsResponseDto.getEmail().equals(email));
   }
 
   @Test void getNumberOfArticles_NumberOfArticlesIsZero_True() {
@@ -55,17 +55,17 @@ public class GetAuthorServiceTest {
   public void getByType_TypeAuthorsFetched_True() {
     final String type = "tech";
 
-    List<AuthorResponseDto> authorResponseDtos = getAuthorService.getByType(type);
+    List<GetAuthorDetailsResponseDto> getAuthorDetailsResponseDtoList = getAuthorService.getByType(type);
 
-    assertThat(!authorResponseDtos.isEmpty());
-    assertThat(authorResponseDtos.stream().anyMatch(authorResponseDto -> authorResponseDto.getType().equals(type)));
+    assertThat(!getAuthorDetailsResponseDtoList.isEmpty());
+    assertThat(getAuthorDetailsResponseDtoList.stream().anyMatch(getAuthorDetailsResponseDto -> getAuthorDetailsResponseDto.getType().equals(type)));
   }
 
   @Test
   public void getAll_AllAuthorsFetched_True() {
-    List<AuthorResponseDto> authorResponseDtos = getAuthorService.getAll();
+    List<GetAuthorDetailsResponseDto> getAuthorDetailsResponseDtoList = getAuthorService.getAll();
 
-    assertThat(!authorResponseDtos.isEmpty());
+    assertThat(!getAuthorDetailsResponseDtoList.isEmpty());
   }
 
 }

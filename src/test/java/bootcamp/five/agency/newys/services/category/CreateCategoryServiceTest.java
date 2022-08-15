@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.dto.response.CategoryResponseDto;
+import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,12 +19,12 @@ public class CreateCategoryServiceTest {
     final String description = "Sports category";
     final Long authorId = 1L;
 
-    CategoryResponseDto categoryResponseDto = createCategoryService.createCategory(name, description, authorId);
+    GetCategoryDetailsResponseDto getCategoryDetailsResponseDto = createCategoryService.createCategory(name, description, authorId);
 
-    assertThat(categoryResponseDto.getId() != null);
-    assertThat(categoryResponseDto.getName().equals(name));
-    assertThat(categoryResponseDto.getDescription().equals(description));
-    assertThat(categoryResponseDto.getAuthorId().equals(authorId));
+    assertThat(getCategoryDetailsResponseDto.getId() != null);
+    assertThat(getCategoryDetailsResponseDto.getName().equals(name));
+    assertThat(getCategoryDetailsResponseDto.getDescription().equals(description));
+    assertThat(getCategoryDetailsResponseDto.getAuthorId().equals(authorId));
   }
 
 }

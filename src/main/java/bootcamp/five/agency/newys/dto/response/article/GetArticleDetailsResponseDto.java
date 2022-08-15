@@ -1,9 +1,8 @@
-package bootcamp.five.agency.newys.dto.response;
+package bootcamp.five.agency.newys.dto.response.article;
 
 import java.util.Date;
-import java.util.List;
 
-public class ArticleResponseDto {
+public class GetArticleDetailsResponseDto {
 
   private Long id;
   private String title;
@@ -13,13 +12,12 @@ public class ArticleResponseDto {
   private String content;
   private int numLikes;
   private Long authorId;
-  private List<CategoryResponseDto> categories;
 
-  public ArticleResponseDto() {
+  public GetArticleDetailsResponseDto() {
   }
 
-  public ArticleResponseDto(Long id, String title, String description, String imageUrl, Date dateOfPublication, String content, int numLikes,
-      Long authorId, List<CategoryResponseDto> categories) {
+  public GetArticleDetailsResponseDto(Long id, String title, String description, String imageUrl, Date dateOfPublication, String content, int numLikes,
+      Long authorId) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -28,7 +26,6 @@ public class ArticleResponseDto {
     this.content = content;
     this.numLikes = numLikes;
     this.authorId = authorId;
-    this.categories = categories;
   }
 
   public Long getId() {
@@ -63,11 +60,7 @@ public class ArticleResponseDto {
     return authorId;
   }
 
-  public List<CategoryResponseDto> getCategories() {
-    return categories;
-  }
-
-  public static class ArticleResponseDtoBuilder {
+  public static class GetArticleDetailsResponseDtoBuilder {
 
     private Long id;
     private String title;
@@ -77,55 +70,49 @@ public class ArticleResponseDto {
     private String content;
     private int numLikes;
     private Long authorId;
-    private List<CategoryResponseDto> categories;
 
-    public ArticleResponseDtoBuilder id(Long id) {
+    public GetArticleDetailsResponseDtoBuilder id(Long id) {
       this.id = id;
       return this;
     }
 
-    public ArticleResponseDtoBuilder title(String title) {
+    public GetArticleDetailsResponseDtoBuilder title(String title) {
       this.title = title;
       return this;
     }
 
-    public ArticleResponseDtoBuilder description(String description) {
+    public GetArticleDetailsResponseDtoBuilder description(String description) {
       this.description = description;
       return this;
     }
 
-    public ArticleResponseDtoBuilder imageUrl(String imageUrl) {
+    public GetArticleDetailsResponseDtoBuilder imageUrl(String imageUrl) {
       this.imageUrl = imageUrl;
       return this;
     }
 
-    public ArticleResponseDtoBuilder dateOfPublication(Date dateOfPublication) {
+    public GetArticleDetailsResponseDtoBuilder dateOfPublication(Date dateOfPublication) {
       this.dateOfPublication = dateOfPublication;
       return this;
     }
 
-    public ArticleResponseDtoBuilder content(String content) {
+    public GetArticleDetailsResponseDtoBuilder content(String content) {
       this.content = content;
       return this;
     }
 
-    public ArticleResponseDtoBuilder numLikes(int numLikes) {
+    public GetArticleDetailsResponseDtoBuilder numLikes(int numLikes) {
       this.numLikes = numLikes;
       return this;
     }
 
-    public ArticleResponseDtoBuilder authorId(Long authorId) {
+    public GetArticleDetailsResponseDtoBuilder authorId(Long authorId) {
       this.authorId = authorId;
       return this;
     }
 
-    public ArticleResponseDtoBuilder categories(List<CategoryResponseDto> categories) {
-      this.categories = categories;
-      return this;
-    }
-
-    public ArticleResponseDto build() {
-      return new ArticleResponseDto(id, title, description, imageUrl, dateOfPublication, content, numLikes, authorId, categories);
+    public GetArticleDetailsResponseDto build() {
+      return new GetArticleDetailsResponseDto(id, title, description, imageUrl, dateOfPublication, content, numLikes, authorId);
     }
 
   }

@@ -1,7 +1,10 @@
 package bootcamp.five.agency.newys.services.article;
 
 import bootcamp.five.agency.newys.domain.Author;
-import bootcamp.five.agency.newys.dto.response.ArticleResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetAuthorArticlesResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetLatestArticlesResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetPopularArticlesResponseDto;
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
@@ -28,35 +31,36 @@ public class GetArticleService {
     this.articleMapper = articleMapper;
   }
 
-  public ArticleResponseDto getArticleById(Long id) {
-    return articleMapper.convertToArticleResponseDto(articleRepository.findById(id)
+  public GetArticleDetailsResponseDto getArticleById(Long id) {
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists")));
   }
 
-  public List<ArticleResponseDto> getArticlesByAuthor(Long authorId) {
+  public List<GetAuthorArticlesResponseDto> getArticlesByAuthor(Long authorId) {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return Optional.ofNullable(articleRepository.findByAuthor(author))
-        .map(entities -> entities.stream().map(articleMapper::convertToArticleResponseDto).collect(Collectors.toList()))
+    return Optional.of(articleRepository.findByAuthor(author))
+        .map(articles -> articles.stream().map(article ->
+            articleMapper.convertToGetAuthorArticlesResponseDto(article, author)).collect(Collectors.toList()))
         .orElse(new ArrayList<>());
   }
 
-  public List<ArticleResponseDto> getLatestArticles() {
+  public List<GetLatestArticlesResponseDto> getLatestArticles() {
     return Optional.ofNullable(articleRepository.findByDateOfPublicationAfter(Date.valueOf(LocalDate.now().minusDays(7))))
-        .map(entities -> entities.stream().map(articleMapper::convertToArticleResponseDto).collect(Collectors.toList()))
+        .map(entities -> entities.stream().map(articleMapper::convertToGetLatestArticlesResponseDto).collect(Collectors.toList()))
         .orElse(new ArrayList<>());
   }
 
-  public List<ArticleResponseDto> getPopularArticles() {
+  public List<GetPopularArticlesResponseDto> getPopularArticles() {
     return Optional.ofNullable(articleRepository.findByNumLikesGreaterThan(3))
-        .map(entities -> entities.stream().map(articleMapper::convertToArticleResponseDto).collect(Collectors.toList()))
+        .map(entities -> entities.stream().map(articleMapper::convertToGetPopularArticlesResponseDto).collect(Collectors.toList()))
         .orElse(new ArrayList<>());
   }
 
-  public List<ArticleResponseDto> getAll() {
+  public List<GetArticleDetailsResponseDto> getAll() {
     return Optional.of(articleRepository.findAll())
-        .map(entities -> entities.stream().map(articleMapper::convertToArticleResponseDto).collect(Collectors.toList()))
+        .map(entities -> entities.stream().map(articleMapper::convertToGetArticleDetailsResponseDto).collect(Collectors.toList()))
         .orElse(new ArrayList<>());
   }
 
