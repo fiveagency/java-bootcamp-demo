@@ -2,6 +2,8 @@ package bootcamp.five.agency.newys.services.category;
 
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.domain.Category;
+import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
+import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
 import java.util.ArrayList;
@@ -13,23 +15,25 @@ public class CreateCategoryService {
 
   private final CategoryRepository categoryRepository;
   private final AuthorRepository authorRepository;
+  private final CategoryMapper categoryMapper;
 
   @Autowired
-  public CreateCategoryService(CategoryRepository categoryRepository, AuthorRepository authorRepository) {
+  public CreateCategoryService(CategoryRepository categoryRepository, AuthorRepository authorRepository, CategoryMapper categoryMapper) {
     this.categoryRepository = categoryRepository;
     this.authorRepository = authorRepository;
+    this.categoryMapper = categoryMapper;
   }
 
-  public Category createCategory(String name, String description, Long authorId) {
+  public GetCategoryDetailsResponseDto createCategory(String name, String description, Long authorId) {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return categoryRepository.save(new Category.CategoryBuilder()
+    return categoryMapper.convertToGetCategoryDetailsResponseDto(categoryRepository.save(new Category.CategoryBuilder()
         .name(name)
         .description(description)
         .author(author)
         .addedArticles(new ArrayList<>())
-        .build());
+        .build()));
   }
 
 }

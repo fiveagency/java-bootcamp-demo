@@ -2,7 +2,9 @@ package bootcamp.five.agency.newys.services.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.domain.Category;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleInCategoryResponseDto;
+import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +14,8 @@ public class UpdateCategoryServiceTest {
 
   @Autowired
   private UpdateCategoryService updateCategoryService;
+  @Autowired
+  private GetAddedArticlesService getAddedArticlesService;
 
   @Test
   public void updateCategory_CategoryUpdated_True() {
@@ -19,11 +23,11 @@ public class UpdateCategoryServiceTest {
     final String name = "Tech";
     final String description = "Tech category";
 
-    Category category = updateCategoryService.updateCategory(id, name, description);
+    GetCategoryDetailsResponseDto getCategoryDetailsResponseDto = updateCategoryService.updateCategory(id, name, description);
 
-    assertThat(category.getId().equals(id));
-    assertThat(category.getName().equals(name));
-    assertThat(category.getDescription().equals(description));
+    assertThat(getCategoryDetailsResponseDto.getId().equals(id));
+    assertThat(getCategoryDetailsResponseDto.getName().equals(name));
+    assertThat(getCategoryDetailsResponseDto.getDescription().equals(description));
   }
 
   @Test
@@ -31,9 +35,9 @@ public class UpdateCategoryServiceTest {
     final Long id = 1L;
     final Long authorId = 2L;
 
-    Category category = updateCategoryService.changeCategoryAuthor(id, authorId);
+    GetCategoryDetailsResponseDto getCategoryDetailsResponseDto = updateCategoryService.changeCategoryAuthor(id, authorId);
 
-    assertThat(category.getAuthor().getId().equals(authorId));
+    assertThat(getCategoryDetailsResponseDto.getAuthorId().equals(authorId));
   }
 
   @Test
@@ -41,9 +45,10 @@ public class UpdateCategoryServiceTest {
     final Long id = 1L;
     final Long articleId = 1L;
 
-    Category category = updateCategoryService.addArticleToCategory(id, articleId);
+    updateCategoryService.addArticleToCategory(id, articleId);
+    List<GetArticleInCategoryResponseDto> getArticleInCategoryResponseDtoList = getAddedArticlesService.getAddedArticles(id);
 
-    assertThat(category.getAddedArticles().stream().anyMatch(article -> article.getId().equals(articleId)));
+    assertThat(!getArticleInCategoryResponseDtoList.isEmpty());
   }
 
 }

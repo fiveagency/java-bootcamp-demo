@@ -2,7 +2,7 @@ package bootcamp.five.agency.newys.services.author;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.domain.Author;
+import bootcamp.five.agency.newys.dto.response.author.GetAuthorDetailsResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,13 +20,13 @@ public class CreateAuthorServiceTest {
     final String email = "rocky.balboa@mail.com";
     final String type = "sport";
 
-    Author author = createAuthorService.createAuthor(firstName, lastName, email, type);
+    GetAuthorDetailsResponseDto getAuthorDetailsResponseDto = createAuthorService.createAuthor(firstName, lastName, email, type);
 
-    assertThat(author.getId() != null);
-    assertThat(author.getFirstName().equals(firstName));
-    assertThat(author.getLastName().equals(lastName));
-    assertThat(author.getEmail().equals(email));
-    assertThat(author.getType().equals(type));
+    assertThat(getAuthorDetailsResponseDto.getId() != null);
+    assertThat(getAuthorDetailsResponseDto.getFirstName().equals(firstName));
+    assertThat(getAuthorDetailsResponseDto.getLastName().equals(lastName));
+    assertThat(getAuthorDetailsResponseDto.getEmail().equals(email));
+    assertThat(getAuthorDetailsResponseDto.getType().equals(type));
   }
 
 }

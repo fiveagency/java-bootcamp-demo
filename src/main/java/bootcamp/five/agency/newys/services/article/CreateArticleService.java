@@ -2,6 +2,8 @@ package bootcamp.five.agency.newys.services.article;
 
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Author;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
+import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import java.util.ArrayList;
@@ -14,18 +16,20 @@ public class CreateArticleService {
 
   private final ArticleRepository articleRepository;
   private final AuthorRepository authorRepository;
+  private final ArticleMapper articleMapper;
 
   @Autowired
-  public CreateArticleService(ArticleRepository articleRepository, AuthorRepository authorRepository) {
+  public CreateArticleService(ArticleRepository articleRepository, AuthorRepository authorRepository, ArticleMapper articleMapper) {
     this.articleRepository = articleRepository;
     this.authorRepository = authorRepository;
+    this.articleMapper = articleMapper;
   }
 
-  public Article createArticle(String title, String description, String imageUrl, Date dateOfPublication, String content, Long authorId) {
+  public GetArticleDetailsResponseDto createArticle(String title, String description, String imageUrl, Date dateOfPublication, String content, Long authorId) {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return articleRepository.save(new Article.ArticleBuilder()
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(new Article.ArticleBuilder()
         .title(title)
         .description(description)
         .imageUrl(imageUrl)
@@ -34,7 +38,7 @@ public class CreateArticleService {
         .numLikes(0)
         .author(author)
         .categories(new ArrayList<>())
-        .build());
+        .build()));
   }
 
 }

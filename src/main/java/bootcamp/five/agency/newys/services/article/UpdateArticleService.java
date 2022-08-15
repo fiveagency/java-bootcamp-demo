@@ -2,6 +2,8 @@ package bootcamp.five.agency.newys.services.article;
 
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Author;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
+import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +14,20 @@ public class UpdateArticleService {
 
   private final ArticleRepository articleRepository;
   private final AuthorRepository authorRepository;
+  private final ArticleMapper articleMapper;
 
   @Autowired
-  public UpdateArticleService(ArticleRepository articleRepository, AuthorRepository authorRepository) {
+  public UpdateArticleService(ArticleRepository articleRepository, AuthorRepository authorRepository, ArticleMapper articleMapper) {
     this.articleRepository = articleRepository;
     this.authorRepository = authorRepository;
+    this.articleMapper = articleMapper;
   }
 
-  public Article updateArticle(Long id, String title, String description, String imageUrl, String content) {
+  public GetArticleDetailsResponseDto updateArticle(Long id, String title, String description, String imageUrl, String content) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
-    return articleRepository.save(new Article.ArticleBuilder()
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(new Article.ArticleBuilder()
         .id(article.getId())
         .title(title)
         .description(description)
@@ -33,10 +37,10 @@ public class UpdateArticleService {
         .numLikes(article.getNumLikes())
         .author(article.getAuthor())
         .categories(article.getCategories())
-        .build());
+        .build()));
   }
 
-  public Article changeArticleAuthor(Long id, Long authorId) {
+  public GetArticleDetailsResponseDto changeArticleAuthor(Long id, Long authorId) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
@@ -45,25 +49,25 @@ public class UpdateArticleService {
 
     article.setAuthor(author);
 
-    return articleRepository.save(article);
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(article));
   }
 
-  public Article likeArticle(Long id) {
+  public GetArticleDetailsResponseDto likeArticle(Long id) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
-    article.setNumLikes(article.getNumLikes()+1);
+    article.setNumLikes(article.getNumLikes() + 1);
 
-    return articleRepository.save(article);
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(article));
   }
 
-  public Article unlikeArticle(Long id) {
+  public GetArticleDetailsResponseDto unlikeArticle(Long id) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
-    article.setNumLikes(article.getNumLikes()-1);
+    article.setNumLikes(article.getNumLikes() - 1);
 
-    return articleRepository.save(article);
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(article));
   }
 
 }

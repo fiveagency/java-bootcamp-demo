@@ -2,7 +2,10 @@ package bootcamp.five.agency.newys.services.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.domain.Article;
+import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetAuthorArticlesResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetLatestArticlesResponseDto;
+import bootcamp.five.agency.newys.dto.response.article.GetPopularArticlesResponseDto;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,39 +21,40 @@ public class GetArticleServiceTest {
   public void getArticleById_ArticleFetched_True() {
     final Long id = 1L;
 
-    Article article = getArticleService.getArticleById(id);
+    GetArticleDetailsResponseDto getArticleDetailsResponseDto = getArticleService.getArticleById(id);
 
-    assertThat(article.getId().equals(id));
+    assertThat(getArticleDetailsResponseDto.getId().equals(id));
   }
 
   @Test
   public void getArticlesByAuthor_AuthorArticlesFetched_True() {
     final Long authorId = 1L;
 
-    List<Article> articles = getArticleService.getArticlesByAuthor(authorId);
+    List<GetAuthorArticlesResponseDto> getAuthorArticlesResponseDtoList = getArticleService.getArticlesByAuthor(authorId);
 
-    assertThat(articles.stream().anyMatch(article -> article.getAuthor().getId().equals(authorId)));
+    assertThat(getAuthorArticlesResponseDtoList.stream().anyMatch(getAuthorArticlesResponseDto ->
+        getAuthorArticlesResponseDto.getAuthorId().equals(authorId)));
   }
 
   @Test
   public void getLatestArticles_LatestArticlesFetched_True() {
-    List<Article> articles = getArticleService.getLatestArticles();
+    List<GetLatestArticlesResponseDto> getLatestArticlesResponseDtoList = getArticleService.getLatestArticles();
 
-    assertThat(!articles.isEmpty());
+    assertThat(!getLatestArticlesResponseDtoList.isEmpty());
   }
 
   @Test
   public void getPopularArticles_PopularArticlesFetched_True() {
-    List<Article> articles = getArticleService.getPopularArticles();
+    List<GetPopularArticlesResponseDto> getPopularArticlesResponseDtoList = getArticleService.getPopularArticles();
 
-    assertThat(!articles.isEmpty());
+    assertThat(!getPopularArticlesResponseDtoList.isEmpty());
   }
 
   @Test
   public void getAll_AllArticlesFetched_True() {
-    List<Article> articles = getArticleService.getAll();
+    List<GetArticleDetailsResponseDto> getArticleDetailsResponseDtoList = getArticleService.getAll();
 
-    assertThat(!articles.isEmpty());
+    assertThat(!getArticleDetailsResponseDtoList.isEmpty());
   }
 
 }

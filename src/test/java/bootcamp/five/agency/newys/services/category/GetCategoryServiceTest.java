@@ -2,7 +2,8 @@ package bootcamp.five.agency.newys.services.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bootcamp.five.agency.newys.domain.Category;
+import bootcamp.five.agency.newys.dto.response.category.GetAuthorCategoriesResponseDto;
+import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +19,26 @@ public class GetCategoryServiceTest {
   public void getCategoryById_CategoryFetched_True() {
     final Long id = 1L;
 
-    Category category = getCategoryService.getCategoryById(id);
+    GetCategoryDetailsResponseDto getCategoryDetailsResponseDto = getCategoryService.getCategoryById(id);
 
-    assertThat(category.getId().equals(id));
+    assertThat(getCategoryDetailsResponseDto.getId().equals(id));
   }
 
   @Test
   public void getCategoriesByAuthor_AuthorCategoriesFetched_True() {
-    final Long authorId = 1L;
+    final Long authorId = 2L;
 
-    List<Category> categories = getCategoryService.getCategoriesByAuthor(authorId);
+    List<GetAuthorCategoriesResponseDto> getAuthorCategoriesResponseDtoList = getCategoryService.getCategoriesByAuthor(authorId);
 
-    assertThat(categories.stream().anyMatch(category -> category.getAuthor().getId().equals(authorId)));
+    assertThat(getAuthorCategoriesResponseDtoList.stream().anyMatch(getAuthorCategoriesResponseDto ->
+        getAuthorCategoriesResponseDto.getAuthorId().equals(authorId)));
   }
 
   @Test
   public void getAll_AllCategoriesFetched_True() {
-    List<Category> categories = getCategoryService.getAll();
+    List<GetCategoryDetailsResponseDto> getCategoryDetailsResponseDtoList = getCategoryService.getAll();
 
-    assertThat(!categories.isEmpty());
+    assertThat(!getCategoryDetailsResponseDtoList.isEmpty());
   }
 
 }
