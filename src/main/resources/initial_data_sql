@@ -1,3 +1,5 @@
+--rename this file to data.sql if you want this to be executed on startup
+
 INSERT INTO AUTHOR VALUES(1,'email@email.com','Emanuel','Mailkovich','Sport' ) ;
 INSERT INTO AUTHOR VALUES(2,'pero@email.com','Pero','Perich','Tech' ) ;
 INSERT INTO AUTHOR VALUES(3,'marko@email.com','Marko','Markich','Metereology' ) ;
