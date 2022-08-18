@@ -1,13 +1,7 @@
 package bootcamp.five.agency.newys.domain;
 
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity(name = "author")
 public class Author {
@@ -28,10 +22,10 @@ public class Author {
   @Column(name = "type")
   private String type;
 
-  @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "author", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true )
   private List<Article> articles;
 
-  @OneToMany(mappedBy = "author")
+  @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, orphanRemoval = true )
   private List<Category> categories;
 
   public Author() {

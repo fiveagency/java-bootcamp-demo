@@ -16,7 +16,7 @@ public class DeleteAuthorServiceTest {
 
   @Test
   public void deleteAuthor_AuthorDeleted_True() {
-    final Long id = 2L;
+    final Long id = 1L;
 
     deleteAuthorService.deleteAuthorById(id);
 
