@@ -1,7 +1,7 @@
 package bootcamp.five.agency.newys.services.author;
 
 import bootcamp.five.agency.newys.domain.Author;
-import bootcamp.five.agency.newys.dto.response.author.GetAuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class UpdateAuthorService {
     this.authorMapper = authorMapper;
   }
 
-  public GetAuthorDetailsResponseDto updateAuthor(Long id, String firstName, String lastName, String email, String type) {
+  public AuthorDetailsResponseDto updateAuthor(Long id, String firstName, String lastName, String email, String type) {
     Author author = authorRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
