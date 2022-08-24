@@ -1,7 +1,7 @@
 package bootcamp.five.agency.newys.services.author;
 
 import bootcamp.five.agency.newys.domain.Author;
-import bootcamp.five.agency.newys.dto.response.author.GetAuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class CreateAuthorService {
     this.authorMapper = authorMapper;
   }
 
-  public GetAuthorDetailsResponseDto createAuthor(String firstName, String lastName, String email, String type) {
+  public AuthorDetailsResponseDto createAuthor(String firstName, String lastName, String email, String type) {
     return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.save(new Author.AuthorBuilder()
         .firstName(firstName)
         .lastName(lastName)

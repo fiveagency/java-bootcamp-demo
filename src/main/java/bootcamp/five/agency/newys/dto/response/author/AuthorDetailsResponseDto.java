@@ -1,6 +1,6 @@
 package bootcamp.five.agency.newys.dto.response.author;
 
-public class GetAuthorDetailsResponseDto {
+public class AuthorDetailsResponseDto {
 
   private Long id;
   private String firstName;
@@ -8,10 +8,10 @@ public class GetAuthorDetailsResponseDto {
   private String email;
   private String type;
 
-  public GetAuthorDetailsResponseDto() {
+  public AuthorDetailsResponseDto() {
   }
 
-  public GetAuthorDetailsResponseDto(Long id, String firstName, String lastName, String email, String type) {
+  public AuthorDetailsResponseDto(Long id, String firstName, String lastName, String email, String type) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -72,8 +72,8 @@ public class GetAuthorDetailsResponseDto {
       return this;
     }
 
-    public GetAuthorDetailsResponseDto build() {
-      return new GetAuthorDetailsResponseDto(id, firstName, lastName, email, type);
+    public AuthorDetailsResponseDto build() {
+      return new AuthorDetailsResponseDto(id, firstName, lastName, email, type);
     }
   }
 }
