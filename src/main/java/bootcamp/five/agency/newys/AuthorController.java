@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 //@Controller is used to mark classes as Spring MVC Controller and therefore ViewResolver should be set up
@@ -49,8 +50,8 @@ public class AuthorController {
 //    In DTO, we can store data from a single source or from multiple resources.
 //    We can either store complete data or can store a small amount of data from a source.
     @RequestMapping (value = "/authors", method =RequestMethod.GET) //same as @GetMapping
-    public List<AuthorDetailsResponseDto> getAuthors() {  //DTO: https://www.baeldung.com/java-dto-pattern
-        return getAuthorService.getAll();
+    public ResponseEntity<List<AuthorDetailsResponseDto>> getAuthors() {  //DTO: https://www.baeldung.com/java-dto-pattern
+        return ResponseEntity.ok(getAuthorService.getAll());
     }
 
 //    ResponseEntity represents the whole HTTP response: status code, headers, and body. As a result, we can use it to fully configure the HTTP response.
@@ -58,13 +59,13 @@ public class AuthorController {
 //    ResponseEntity is a generic type. Consequently, we can use any type as the response body:
     @GetMapping  (value = "/author/{id}")
     public ResponseEntity<AuthorDetailsResponseDto> getAuthor(@PathVariable Long id) {
-        return new ResponseEntity<>(getAuthorService.getAuthorById(id), HttpStatus.OK);
+        return ResponseEntity.ok(getAuthorService.getAuthorById(id));
     }
 
     @PostMapping(value = "/author/create")
-    public ResponseEntity<HttpStatus> createAuthor(@RequestBody Author author) {
-        createAuthorService.createAuthor(author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<AuthorDetailsResponseDto> createAuthor(@RequestBody AuthorDetailsResponseDto author) {
+        AuthorDetailsResponseDto createdAuthor = createAuthorService.createAuthor(author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAuthor);//created(URI.create("/author/" + createdAuthor.getId())).build();
     }
 
 //    A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request.
@@ -76,9 +77,9 @@ public class AuthorController {
 //    For example, if a client sends a PUT request and the underlying connection is closed before any response is received, then the client can establish a new connection and retry the idempotent request.
 //    It knows that repeating the request will have the same intended effect, even if the original request succeeded, though the response might differ.
     @PutMapping(value = "/author/{id}/update")
-    public ResponseEntity<HttpStatus> updateAuthor(@PathVariable Long id, @RequestBody Author author) {
-        updateAuthorService.updateAuthor(id, author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<AuthorDetailsResponseDto> updateAuthor(@PathVariable Long id, @RequestBody AuthorDetailsResponseDto author) {
+        AuthorDetailsResponseDto updatedAuthor = updateAuthorService.updateAuthor(id, author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
+        return ResponseEntity.ok(updatedAuthor);
     }
 
 //    For each HTTP verb, there are expected status codes a server should return upon success:
@@ -88,8 +89,8 @@ public class AuthorController {
 //    PUT — return 200 (OK)
 //    DELETE — return 204 (NO CONTENT) If the operation fails, return the most specific status code possible corresponding to the problem that was encountered.
     @DeleteMapping (value = "/author/{id}/delete")
-    public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         deleteAuthorService.deleteAuthorById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }
