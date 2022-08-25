@@ -434,3 +434,33 @@ Documentation comments can be extracted to HTML files using the javadoc tool. Ja
 private int comments;
 ```
 Documentation comments are meant to describe the specification of the code, from an implementation-free perspective, to be read by developers who might not necessarily have the source code at hand. Java associates documentation comments with the first declaration after the comment. As a result, documentation comments should not be present inside a method or constructor definition block.
+
+**DTOs (Data Transfer Objects)**
+
+DTO objects are used for request/response parts of some transfer process. When creating class that 
+serves as DTO class, it should always have `Dto` suffix in its name.
+
+Request DTOs should also contain `Request` suffix. Similarly, Response DTOs should also contain `Response` suffix.
+
+These two combined - DTOs should end with either of `RequestDto` or `ResponseDto`.
+
+**Builder pattern**
+
+Pattern used for creating objects - we won't create objects using their constructors and/or setters - instead, we'll create designated builder classes
+that will take care of creating that object for us.
+
+If we create builder class inside of class for which we create builder, builder class **has to be public static class**.
+
+If we create some object using the builder pattern, all constructors used in **builder class have to be private** - this way we prevent
+user from using constructor and force him to use the builder.
+
+If we use builder pattern, we can provide access to builder class over static method, like this:
+* i.e. we have Article class
+* We have ArticleBuilder inside of that class (**public static one**)
+* inside od **Article** class, we create `public static ArticleBuilder builder()` method that returns new instance of ArticleBuilder
+* **Do not use** `new Article.ArticleBuilder()...` - instead, use `Article.builder()...`
+
+
+**Response entities - Spring Controller**
+
+Do not use `new ResponseEntity<>.....` - instead, use ResponseEntity builder static methods for building this object.
