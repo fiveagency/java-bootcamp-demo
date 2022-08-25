@@ -36,7 +36,5 @@ public class ProductAvailabilityParamTest {
 
         Executable settingQuantity = () -> productAvailability.setQuantity(newQuantity);
         assertThrows(IllegalArgumentException.class, settingQuantity);
-
-
     }
 }
