@@ -1,19 +1,25 @@
-package bootcamp.five.agency.newys;
+package bootcamp.five.agency.newys.controller;
 
-import bootcamp.five.agency.newys.domain.Author;
+import bootcamp.five.agency.newys.dto.request.author.CreateAuthorRequestDto;
+import bootcamp.five.agency.newys.dto.request.author.UpdateAuthorRequestDto;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.DeleteAuthorService;
 import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import bootcamp.five.agency.newys.services.author.UpdateAuthorService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 //@Controller is used to mark classes as Spring MVC Controller and therefore ViewResolver should be set up
 //@RestController is a convenience annotation that does nothing more than adding the @Controller and @ResponseBody annotations
@@ -49,7 +55,7 @@ public class AuthorController {
 //    It contains mechanisms of serialization and de-serialization.
 //    In DTO, we can store data from a single source or from multiple resources.
 //    We can either store complete data or can store a small amount of data from a source.
-    @RequestMapping (value = "/authors", method =RequestMethod.GET) //same as @GetMapping
+    @RequestMapping (value = "/authors", method = RequestMethod.GET) //same as @GetMapping
     public ResponseEntity<List<AuthorDetailsResponseDto>> getAuthors() {  //DTO: https://www.baeldung.com/java-dto-pattern
         return ResponseEntity.ok(getAuthorService.getAll());
     }
@@ -63,9 +69,9 @@ public class AuthorController {
     }
 
     @PostMapping(value = "/author/create")
-    public ResponseEntity<AuthorDetailsResponseDto> createAuthor(@RequestBody AuthorDetailsResponseDto author) {
+    public ResponseEntity<AuthorDetailsResponseDto> createAuthor(@RequestBody CreateAuthorRequestDto author) {
         AuthorDetailsResponseDto createdAuthor = createAuthorService.createAuthor(author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAuthor);//created(URI.create("/author/" + createdAuthor.getId())).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAuthor);
     }
 
 //    A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request.
@@ -77,7 +83,7 @@ public class AuthorController {
 //    For example, if a client sends a PUT request and the underlying connection is closed before any response is received, then the client can establish a new connection and retry the idempotent request.
 //    It knows that repeating the request will have the same intended effect, even if the original request succeeded, though the response might differ.
     @PutMapping(value = "/author/{id}/update")
-    public ResponseEntity<AuthorDetailsResponseDto> updateAuthor(@PathVariable Long id, @RequestBody AuthorDetailsResponseDto author) {
+    public ResponseEntity<AuthorDetailsResponseDto> updateAuthor(@PathVariable Long id, @RequestBody UpdateAuthorRequestDto author) {
         AuthorDetailsResponseDto updatedAuthor = updateAuthorService.updateAuthor(id, author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
         return ResponseEntity.ok(updatedAuthor);
     }
