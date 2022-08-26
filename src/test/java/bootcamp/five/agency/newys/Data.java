@@ -3,6 +3,8 @@ package bootcamp.five.agency.newys;
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.domain.Category;
+import bootcamp.five.agency.newys.dto.request.author.CreateAuthorRequestDto;
+import bootcamp.five.agency.newys.dto.request.author.UpdateAuthorRequestDto;
 import bootcamp.five.agency.newys.dto.response.article.*;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.dto.response.category.GetAuthorCategoriesResponseDto;
@@ -347,6 +349,22 @@ public class Data {
             .lastName(authorLastName2)
             .email(authorEmail2)
             .type(authorType2)
+            .build();
+
+    public static final List<AuthorDetailsResponseDto> allAuthorsDto = List.of(authorDetailsDto, authorDetailsDto2);
+
+    public static final CreateAuthorRequestDto createAuthorRequestDto = new CreateAuthorRequestDto.CreateAuthorRequestDtoBuilder()
+            .firstName(authorFirstName)
+            .lastName(authorLastName)
+            .email(authorEmail)
+            .type(authorType)
+            .build();
+
+    public static final UpdateAuthorRequestDto updateAuthorRequestDto = new UpdateAuthorRequestDto.UpdateAuthorRequestDtoBuilder()
+            .firstName(authorFirstName)
+            .lastName(authorLastName)
+            .email(authorEmail)
+            .type(authorType)
             .build();
 
     public static final GetCategoryDetailsResponseDto categoryDto = new GetCategoryDetailsResponseDto.GetCategoryDetailsResponseDtoBuilder()
