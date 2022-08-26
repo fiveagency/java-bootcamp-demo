@@ -464,3 +464,19 @@ If we use builder pattern, we can provide access to builder class over static me
 **Response entities - Spring Controller**
 
 Do not use `new ResponseEntity<>.....` - instead, use ResponseEntity builder static methods for building this object.
+
+**Boolean expressions in if statements**
+
+When working with boolean expressions in if statements, do not compare with `true` or `false` constants - boolean expression by itself can be evaluated.
+
+So, avoid: `<boolean expression> == true`, instead use `<boolean expression>`.
+
+Similarly, avoid `<boolean expression> == false`, instead use `!<boolean expression>`
+
+**Method references in Java Lambda expressions**
+
+When working with Lambda expressions, Java introduced _method references_: https://www.baeldung.com/java-method-references 
+
+Avoid `...someLambda(parameter -> SomeUtilClass.someStaticMethod(parameter)`, instead use `...someLambda(SomeUtilClass::someStaticMethod)`.
+
+Similarly, avoid `...someLambda(parameter -> someService.someMethod(parameter)`, instead use `...someLambda(someService::someMethod)`.
