@@ -10,7 +10,7 @@ public class CreateAuthorRequestDto {
   public CreateAuthorRequestDto() {
   }
 
-  public CreateAuthorRequestDto(String firstName, String lastName, String email, String type) {
+  private CreateAuthorRequestDto(String firstName, String lastName, String email, String type) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;

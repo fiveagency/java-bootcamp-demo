@@ -10,7 +10,7 @@ public class UpdateAuthorRequestDto {
   public UpdateAuthorRequestDto() {
   }
 
-  public UpdateAuthorRequestDto(String firstName, String lastName, String email, String type) {
+  private UpdateAuthorRequestDto(String firstName, String lastName, String email, String type) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
