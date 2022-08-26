@@ -1,26 +1,40 @@
 package bootcamp.five.agency.newys.services.author;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
+import bootcamp.five.agency.newys.exceptions.AuthorNotFoundException;
+import bootcamp.five.agency.newys.mappers.AuthorMapper;
+import bootcamp.five.agency.newys.repository.AuthorRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static bootcamp.five.agency.newys.Data.*;
+
 public class DeleteAuthorServiceTest {
 
-  @Autowired
   private DeleteAuthorService deleteAuthorService;
-  @Autowired
   private GetAuthorService getAuthorService;
+  private AuthorRepository authorRepository;
+  private AuthorMapper authorMapper;
+
+  @BeforeEach
+  public void setup() {
+    authorRepository = mock(AuthorRepository.class);
+    authorMapper = mock(AuthorMapper.class);
+    deleteAuthorService = new DeleteAuthorService(authorRepository);
+    getAuthorService = new GetAuthorService(authorRepository, authorMapper);
+  }
 
   @Test
   public void deleteAuthor_AuthorDeleted_True() {
-    final Long id = 2L;
+    when(authorRepository.findById(authorId)).thenReturn(Optional.empty());
 
-    deleteAuthorService.deleteAuthorById(id);
+    deleteAuthorService.deleteAuthorById(authorId);
 
-    assertThatIllegalStateException().isThrownBy(() -> getAuthorService.getAuthorById(id));
+    assertThatExceptionOfType(AuthorNotFoundException.class).isThrownBy(() -> getAuthorService.getAuthorById(authorId));
   }
 
 }

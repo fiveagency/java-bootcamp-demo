@@ -1,60 +1,106 @@
 package bootcamp.five.agency.newys.services.article;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import bootcamp.five.agency.newys.dto.response.article.GetAuthorArticlesResponseDto;
 import bootcamp.five.agency.newys.dto.response.article.GetLatestArticlesResponseDto;
 import bootcamp.five.agency.newys.dto.response.article.GetPopularArticlesResponseDto;
-import java.util.List;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import java.util.List;
+import java.util.Optional;
+
+import bootcamp.five.agency.newys.mappers.ArticleMapper;
+import bootcamp.five.agency.newys.repository.ArticleRepository;
+import bootcamp.five.agency.newys.repository.AuthorRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static bootcamp.five.agency.newys.Data.*;
+
 public class GetArticleServiceTest {
 
-  @Autowired
   private GetArticleService getArticleService;
+
+  private ArticleRepository articleRepository;
+  private AuthorRepository authorRepository;
+  private ArticleMapper articleMapper;
+
+  @BeforeEach
+  public void setup() {
+    articleRepository = mock(ArticleRepository.class);
+    authorRepository = mock(AuthorRepository.class);
+    articleMapper = mock(ArticleMapper.class);
+    getArticleService = new GetArticleService(articleRepository, authorRepository, articleMapper);
+  }
 
   @Test
   public void getArticleById_ArticleFetched_True() {
-    final Long id = 1L;
+    when(articleRepository.findById(articleId)).thenReturn(Optional.of(article));
+    when(articleMapper.convertToGetArticleDetailsResponseDto(article)).thenReturn(articleDetailsDto);
 
-    GetArticleDetailsResponseDto getArticleDetailsResponseDto = getArticleService.getArticleById(id);
+    GetArticleDetailsResponseDto response = getArticleService.getArticleById(articleId);
 
-    assertThat(getArticleDetailsResponseDto.getId().equals(id));
+    assertThat(response.getId().equals(articleId));
   }
 
   @Test
   public void getArticlesByAuthor_AuthorArticlesFetched_True() {
-    final Long authorId = 1L;
+    when(authorRepository.findById(authorId)).thenReturn(Optional.of(author));
+    when(articleRepository.findByAuthor(any(Author.class))).thenReturn(articlesByAuthor);
+    when(articleMapper.convertToGetAuthorArticlesResponseDto(article, author)).thenReturn(authorArticleDto);
+    when(articleMapper.convertToGetAuthorArticlesResponseDto(article2, author)).thenReturn(authorArticleDto2);
 
-    List<GetAuthorArticlesResponseDto> getAuthorArticlesResponseDtoList = getArticleService.getArticlesByAuthor(authorId);
+    List<GetAuthorArticlesResponseDto> response = getArticleService.getArticlesByAuthor(authorId);
 
-    assertThat(getAuthorArticlesResponseDtoList.stream().anyMatch(getAuthorArticlesResponseDto ->
-        getAuthorArticlesResponseDto.getAuthorId().equals(authorId)));
+    assertThat(response.stream().anyMatch(
+            getAuthorArticlesResponseDto -> getAuthorArticlesResponseDto.getAuthorId().equals(authorId)));
   }
 
   @Test
   public void getLatestArticles_LatestArticlesFetched_True() {
-    List<GetLatestArticlesResponseDto> getLatestArticlesResponseDtoList = getArticleService.getLatestArticles();
+    when(articleRepository.findByDateOfPublicationAfter(any(java.sql.Date.class))).thenReturn(latestArticles);
+    when(articleMapper.convertToGetLatestArticlesResponseDto(article)).thenReturn(latestArticleDto);
+    when(articleMapper.convertToGetLatestArticlesResponseDto(article2)).thenReturn(latestArticleDto2);
 
-    assertThat(!getLatestArticlesResponseDtoList.isEmpty());
+    List<GetLatestArticlesResponseDto> responseList = getArticleService.getLatestArticles();
+
+    assertThat(!responseList.isEmpty());
+    assertThat(responseList.size() == 2);
+    assertThat(responseList.contains(latestArticleDto));
+    assertThat(responseList.contains(latestArticleDto2));
   }
 
   @Test
   public void getPopularArticles_PopularArticlesFetched_True() {
-    List<GetPopularArticlesResponseDto> getPopularArticlesResponseDtoList = getArticleService.getPopularArticles();
+    when(articleRepository.findByNumLikesGreaterThan(anyInt())).thenReturn(popularArticles);
+    when(articleMapper.convertToGetPopularArticlesResponseDto(article)).thenReturn(popularArticleDto);
+    when(articleMapper.convertToGetPopularArticlesResponseDto(article2)).thenReturn(popularArticleDto2);
 
-    assertThat(!getPopularArticlesResponseDtoList.isEmpty());
+    List<GetPopularArticlesResponseDto> responseList = getArticleService.getPopularArticles();
+
+    assertThat(!responseList.isEmpty());
+    assertThat(responseList.size() == 2);
+    assertThat(responseList.contains(popularArticleDto));
+    assertThat(responseList.contains(popularArticleDto2));
   }
 
   @Test
   public void getAll_AllArticlesFetched_True() {
-    List<GetArticleDetailsResponseDto> getArticleDetailsResponseDtoList = getArticleService.getAll();
+    when(articleRepository.findAll()).thenReturn(allArticles);
+    when(articleMapper.convertToGetArticleDetailsResponseDto(article)).thenReturn(articleDetailsDto);
+    when(articleMapper.convertToGetArticleDetailsResponseDto(article2)).thenReturn(articleDetailsDto2);
 
-    assertThat(!getArticleDetailsResponseDtoList.isEmpty());
+    List<GetArticleDetailsResponseDto> responseList = getArticleService.getAll();
+
+    assertThat(!responseList.isEmpty());
+    assertThat(responseList.size() == 2);
+    assertThat(responseList.contains(articleDetailsDto));
+    assertThat(responseList.contains(articleDetailsDto2));
   }
 
 }

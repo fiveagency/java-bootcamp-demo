@@ -1,26 +1,42 @@
 package bootcamp.five.agency.newys.services.category;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
+import bootcamp.five.agency.newys.mappers.CategoryMapper;
+import bootcamp.five.agency.newys.repository.AuthorRepository;
+import bootcamp.five.agency.newys.repository.CategoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.mockito.Mockito.mock;
+import static bootcamp.five.agency.newys.Data.*;
+import static org.mockito.Mockito.when;
+
 public class DeleteCategoryServiceTest {
 
-  @Autowired
   private DeleteCategoryService deleteCategoryService;
-  @Autowired
   private GetCategoryService getCategoryService;
+  private CategoryRepository categoryRepository;
+  private AuthorRepository authorRepository;
+  private CategoryMapper categoryMapper;
+
+  @BeforeEach
+  public void setup() {
+    categoryRepository = mock(CategoryRepository.class);
+    authorRepository = mock(AuthorRepository.class);
+    categoryMapper = mock(CategoryMapper.class);
+    deleteCategoryService = new DeleteCategoryService(categoryRepository);
+    getCategoryService = new GetCategoryService(categoryRepository, authorRepository, categoryMapper);
+  }
 
   @Test
   public void deleteCategoryById_CategoryDeleted_True() {
-    final Long id = 1L;
+    when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
-    deleteCategoryService.deleteCategoryById(id);
+    deleteCategoryService.deleteCategoryById(categoryId);
 
-    assertThatIllegalStateException().isThrownBy(() -> getCategoryService.getCategoryById(id));
+    assertThatIllegalStateException().isThrownBy(() -> getCategoryService.getCategoryById(categoryId));
   }
 
 }

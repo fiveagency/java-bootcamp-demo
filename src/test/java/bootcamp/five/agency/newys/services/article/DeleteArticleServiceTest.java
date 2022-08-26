@@ -1,26 +1,41 @@
 package bootcamp.five.agency.newys.services.article;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
+import bootcamp.five.agency.newys.mappers.ArticleMapper;
+import bootcamp.five.agency.newys.repository.ArticleRepository;
+import bootcamp.five.agency.newys.repository.AuthorRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import java.util.Optional;
 
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static bootcamp.five.agency.newys.Data.*;
+
 public class DeleteArticleServiceTest {
 
-  @Autowired
+  private ArticleRepository articleRepository;
+  private AuthorRepository authorRepository;
+  private ArticleMapper articleMapper;
   private DeleteArticleService deleteArticleService;
-  @Autowired
   private GetArticleService getArticleService;
+
+  @BeforeEach
+  public void setup() {
+    articleRepository = mock(ArticleRepository.class);
+    authorRepository = mock(AuthorRepository.class);
+    articleMapper = mock(ArticleMapper.class);
+    deleteArticleService = new DeleteArticleService(articleRepository);
+    getArticleService = new GetArticleService(articleRepository, authorRepository, articleMapper);
+  }
 
   @Test
   public void deleteArticleById_ArticleDeleted_True() {
-    final Long id = 1L;
+    when(articleRepository.findById(articleId)).thenReturn(Optional.empty());
 
-    deleteArticleService.deleteArticleById(id);
+    deleteArticleService.deleteArticleById(articleId);
 
-    assertThatIllegalStateException().isThrownBy(() -> getArticleService.getArticleById(id));
+    assertThatIllegalStateException().isThrownBy(() -> getArticleService.getArticleById(articleId));
   }
 
 }

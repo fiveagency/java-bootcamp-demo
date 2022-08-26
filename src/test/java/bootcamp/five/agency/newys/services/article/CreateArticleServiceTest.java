@@ -1,37 +1,60 @@
 package bootcamp.five.agency.newys.services.article;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
-import java.util.Date;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import java.util.Optional;
 
-@SpringBootTest
+import bootcamp.five.agency.newys.mappers.ArticleMapper;
+import bootcamp.five.agency.newys.repository.ArticleRepository;
+import bootcamp.five.agency.newys.repository.AuthorRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.any;
+import static bootcamp.five.agency.newys.Data.*;
+
+//@ExtendWith(MockitoExtension.class)
 public class CreateArticleServiceTest {
 
-  @Autowired
+  //@InjectMocks
   private CreateArticleService createArticleService;
+
+  //@Mock
+  private ArticleRepository articleRepository;
+  //@Mock
+  private AuthorRepository authorRepository;
+
+  //@Mock
+  private ArticleMapper articleMapper;
+
+  @BeforeEach
+  public void setup() {
+    articleRepository = mock(ArticleRepository.class);
+    authorRepository = mock(AuthorRepository.class);
+    articleMapper = mock(ArticleMapper.class);
+    createArticleService = new CreateArticleService(articleRepository, authorRepository, articleMapper);
+  }
 
   @Test
   public void createArticle_ArticleCreated_True() {
-    final String title = "New iPhone announced";
-    final String description = "New iPhone announced";
-    final String imageUrl = "images/iphone.png";
-    final Date dateOfPublication = new Date();
-    final String content = "New iPhone announced";
-    final Long authorId = 1L;
+    when(authorRepository.findById(anyLong())).thenReturn(Optional.of(author));
+    when(articleRepository.save(any(Article.class))).thenReturn(article);
+    when(articleMapper.convertToGetArticleDetailsResponseDto(article)).thenReturn(articleDetailsDto);
 
-    GetArticleDetailsResponseDto getArticleDetailsResponseDto = createArticleService.createArticle(title, description, imageUrl, dateOfPublication, content, authorId);
+    GetArticleDetailsResponseDto response = createArticleService.createArticle(articleTitle, articleDescription,
+            articleImageUrl, articleDateOfPublicationNow, articleContent, authorId);
 
-    assertThat(getArticleDetailsResponseDto.getId() != null);
-    assertThat(getArticleDetailsResponseDto.getTitle().equals(title));
-    assertThat(getArticleDetailsResponseDto.getDescription().equals(description));
-    assertThat(getArticleDetailsResponseDto.getImageUrl().equals(imageUrl));
-    assertThat(getArticleDetailsResponseDto.getDateOfPublication().equals(dateOfPublication));
-    assertThat(getArticleDetailsResponseDto.getContent().equals(content));
-    assertThat(getArticleDetailsResponseDto.getAuthorId().equals(authorId));
+    assertThat(response.getId() != null);
+    assertThat(response.getTitle().equals(articleTitle));
+    assertThat(response.getDescription().equals(articleDescription));
+    assertThat(response.getImageUrl().equals(articleImageUrl));
+    assertThat(response.getDateOfPublication().equals(articleDateOfPublicationNow));
+    assertThat(response.getContent().equals(articleContent));
+    assertThat(response.getAuthorId().equals(authorId));
   }
 
 }

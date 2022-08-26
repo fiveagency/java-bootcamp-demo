@@ -1,32 +1,44 @@
 package bootcamp.five.agency.newys.services.author;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.mappers.AuthorMapper;
+import bootcamp.five.agency.newys.repository.AuthorRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.Mockito;
 
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static bootcamp.five.agency.newys.Data.*;
+
 public class CreateAuthorServiceTest {
 
-  @Autowired
   private CreateAuthorService createAuthorService;
+
+  private AuthorRepository authorRepository;
+  private AuthorMapper authorMapper;
+
+  @BeforeEach
+  public void setup() {
+    authorRepository = mock(AuthorRepository.class);
+    authorMapper = mock(AuthorMapper.class);
+    createAuthorService = new CreateAuthorService(authorRepository, authorMapper);
+  }
 
   @Test
   public void createAuthor_AuthorCreated_True() {
-    final String firstName = "Rocky";
-    final String lastName = "Balboa";
-    final String email = "rocky.balboa@mail.com";
-    final String type = "sport";
+    when(authorRepository.save(Mockito.any(Author.class))).thenReturn(author);
+    when(authorMapper.convertToGetAuthorDetailsResponseDto(author)).thenReturn(authorDetailsDto);
 
-    AuthorDetailsResponseDto authorDetailsResponseDto = createAuthorService.createAuthor(firstName, lastName, email, type);
+    AuthorDetailsResponseDto response = createAuthorService.createAuthor(authorFirstName, authorLastName, authorEmail, authorType);
 
-    assertThat(authorDetailsResponseDto.getId() != null);
-    assertThat(authorDetailsResponseDto.getFirstName().equals(firstName));
-    assertThat(authorDetailsResponseDto.getLastName().equals(lastName));
-    assertThat(authorDetailsResponseDto.getEmail().equals(email));
-    assertThat(authorDetailsResponseDto.getType().equals(type));
+    assertThat(response.getId() != null);
+    assertThat(response.getFirstName().equals(authorFirstName));
+    assertThat(response.getLastName().equals(authorLastName));
+    assertThat(response.getEmail().equals(authorEmail));
+    assertThat(response.getType().equals(authorType));
   }
 
 }
