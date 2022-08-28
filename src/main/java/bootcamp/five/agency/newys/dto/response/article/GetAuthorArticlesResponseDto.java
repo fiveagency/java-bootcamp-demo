@@ -45,6 +45,10 @@ public class GetAuthorArticlesResponseDto {
     return authorLastName;
   }
 
+  public static GetAuthorArticlesResponseDtoBuilder builder() {
+    return new GetAuthorArticlesResponseDtoBuilder();
+  }
+
   public static class GetAuthorArticlesResponseDtoBuilder {
 
     private Long id;

@@ -27,7 +27,7 @@ public class UpdateArticleService {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Article does not exists"));
 
-    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(new Article.ArticleBuilder()
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(Article.builder()
         .id(article.getId())
         .title(title)
         .description(description)

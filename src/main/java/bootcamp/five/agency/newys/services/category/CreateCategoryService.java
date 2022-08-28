@@ -6,7 +6,7 @@ import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsRespon
 import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
-import java.util.ArrayList;
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +28,11 @@ public class CreateCategoryService {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return categoryMapper.convertToGetCategoryDetailsResponseDto(categoryRepository.save(new Category.CategoryBuilder()
+    return categoryMapper.convertToGetCategoryDetailsResponseDto(categoryRepository.save(Category.builder()
         .name(name)
         .description(description)
         .author(author)
-        .addedArticles(new ArrayList<>())
+        .addedArticles(Collections.emptyList())
         .build()));
   }
 

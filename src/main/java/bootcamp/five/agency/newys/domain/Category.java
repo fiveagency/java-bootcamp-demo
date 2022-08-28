@@ -80,8 +80,8 @@ public class Category {
     return addedArticles;
   }
 
-  public void setAddedArticles(List<Article> addedArticles) {
-    this.addedArticles = addedArticles;
+  public static CategoryBuilder builder() {
+    return new CategoryBuilder();
   }
 
   public static class CategoryBuilder {

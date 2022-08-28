@@ -1,8 +1,9 @@
 package bootcamp.five.agency.newys.services.author;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,23 +12,39 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class UpdateAuthorServiceTest {
 
   @Autowired
+  private CreateAuthorService createAuthorService;
+  @Autowired
+  private GetAuthorService getAuthorService;
+  @Autowired
   private UpdateAuthorService updateAuthorService;
+
+  @BeforeEach
+  public void init() {
+    final String firstName = "Rocky";
+    final String lastName = "Balboa";
+    final String email = "rocky.balboa4@mail.com";
+    final String type = "sport";
+
+    createAuthorService.createAuthor(firstName, lastName, email, type);
+  }
 
   @Test
   public void updateAuthor_AuthorUpdated_True() {
-    final Long id = 1L;
     final String firstName = "John";
     final String lastName = "Doe";
-    final String email = "john.doe@mail.com";
+    final String email = "john.doe1@mail.com";
     final String type = "tech";
 
-    AuthorDetailsResponseDto authorDetailsResponseDto = updateAuthorService.updateAuthor(id, firstName, lastName, email, type);
+    AuthorDetailsResponseDto authorDetailsResponseDto = getAuthorService.getAuthorByEmail("rocky.balboa4@mail.com");
 
-    assertThat(authorDetailsResponseDto.getId().equals(id));
-    assertThat(authorDetailsResponseDto.getFirstName().equals(firstName));
-    assertThat(authorDetailsResponseDto.getLastName().equals(lastName));
-    assertThat(authorDetailsResponseDto.getEmail().equals(email));
-    assertThat(authorDetailsResponseDto.getType().equals(type));
+    AuthorDetailsResponseDto updatedAuthorDetailsResponseDto = updateAuthorService.updateAuthor(authorDetailsResponseDto.getId(), firstName,
+        lastName, email, type);
+
+    assertEquals(updatedAuthorDetailsResponseDto.getId(), authorDetailsResponseDto.getId());
+    assertEquals(updatedAuthorDetailsResponseDto.getFirstName(), firstName);
+    assertEquals(updatedAuthorDetailsResponseDto.getLastName(), lastName);
+    assertEquals(updatedAuthorDetailsResponseDto.getEmail(), email);
+    assertEquals(updatedAuthorDetailsResponseDto.getType(), type);
   }
 
 }

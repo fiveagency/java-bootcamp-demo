@@ -23,7 +23,7 @@ public class UpdateAuthorService {
     Author author = authorRepository.findById(id)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.save(new Author.AuthorBuilder()
+    return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.save(Author.builder()
         .id(author.getId())
         .firstName(firstName)
         .lastName(lastName)

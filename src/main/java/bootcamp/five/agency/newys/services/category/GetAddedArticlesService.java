@@ -4,7 +4,7 @@ import bootcamp.five.agency.newys.domain.Category;
 import bootcamp.five.agency.newys.dto.response.article.GetArticleInCategoryResponseDto;
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public class GetAddedArticlesService {
     return Optional.of(category.getAddedArticles())
         .map(articles -> articles.stream().map(article ->
             articleMapper.convertToGetArticleInCategoryResponseDto(article, category)).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
 }

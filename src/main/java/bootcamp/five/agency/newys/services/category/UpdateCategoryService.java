@@ -62,6 +62,8 @@ public class UpdateCategoryService {
     articleRepository.save(article);
 
     category.getAddedArticles().add(article);
+
+    categoryRepository.save(category);
   }
 
 }

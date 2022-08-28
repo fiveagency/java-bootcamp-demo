@@ -1,54 +1,71 @@
 package bootcamp.five.agency.newys.services.author;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GetAuthorServiceTest {
 
   @Autowired
+  public CreateAuthorService createAuthorService;
+  @Autowired
   public GetAuthorService getAuthorService;
+
+  @BeforeAll
+  public void init() {
+    final String firstName = "Jane";
+    final String lastName = "Doe";
+    final String email = "jane.doe@mail.com";
+    final String type = "tech";
+
+    createAuthorService.createAuthor(firstName, lastName, email, type);
+  }
 
   @Test
   public void getAuthorById_AuthorFetched_True() {
-    final Long id = 1L;
+    AuthorDetailsResponseDto createAuthorDetailsResponseDto = getAuthorService.getAuthorByEmail("jane.doe@mail.com");
 
-    AuthorDetailsResponseDto authorDetailsResponseDto = getAuthorService.getAuthorById(id);
+    AuthorDetailsResponseDto authorDetailsResponseDto = getAuthorService.getAuthorById(createAuthorDetailsResponseDto.getId());
 
-    assertThat(authorDetailsResponseDto.getId().equals(id));
+    assertEquals(authorDetailsResponseDto.getId(), createAuthorDetailsResponseDto.getId());
   }
 
   @Test
   public void getAuthorByFirstNameAndLastName_AuthorFetched_True() {
-    final String firstName = "John";
+    final String firstName = "Jane";
     final String lastName = "Doe";
 
     AuthorDetailsResponseDto authorDetailsResponseDto = getAuthorService.getAuthorByFirstNameAndLastName(firstName, lastName);
 
-    assertThat(authorDetailsResponseDto.getFirstName().equals(firstName));
-    assertThat(authorDetailsResponseDto.getLastName().equals(lastName));
+    assertEquals(authorDetailsResponseDto.getFirstName(), firstName);
+    assertEquals(authorDetailsResponseDto.getLastName(), lastName);
   }
 
   @Test
   public void getAuthorByEmail_AuthorFetched_True() {
-    final String email = "john.doe@mail.com";
+    final String email = "jane.doe@mail.com";
 
     AuthorDetailsResponseDto authorDetailsResponseDto = getAuthorService.getAuthorByEmail(email);
 
-    assertThat(authorDetailsResponseDto.getEmail().equals(email));
+    assertEquals(authorDetailsResponseDto.getEmail(), email);
   }
 
   @Test void getNumberOfArticles_NumberOfArticlesIsZero_True() {
-    final Long id = 1L;
+    AuthorDetailsResponseDto authorDetailsResponseDto = getAuthorService.getAuthorByEmail("jane.doe@mail.com");
 
-    Integer numberOfArticles = getAuthorService.getNumberOfArticles(id);
+    Integer numberOfArticles = getAuthorService.getNumberOfArticles(authorDetailsResponseDto.getId());
 
-    assertThat(numberOfArticles == 0);
+    assertEquals(numberOfArticles, 0);
   }
 
   @Test
@@ -57,15 +74,15 @@ public class GetAuthorServiceTest {
 
     List<AuthorDetailsResponseDto> authorDetailsResponseDtoList = getAuthorService.getByType(type);
 
-    assertThat(!authorDetailsResponseDtoList.isEmpty());
-    assertThat(authorDetailsResponseDtoList.stream().anyMatch(getAuthorDetailsResponseDto -> getAuthorDetailsResponseDto.getType().equals(type)));
+    assertFalse(authorDetailsResponseDtoList.isEmpty());
+    assertTrue(authorDetailsResponseDtoList.stream().anyMatch(getAuthorDetailsResponseDto -> getAuthorDetailsResponseDto.getType().equals(type)));
   }
 
   @Test
   public void getAll_AllAuthorsFetched_True() {
     List<AuthorDetailsResponseDto> authorDetailsResponseDtoList = getAuthorService.getAll();
 
-    assertThat(!authorDetailsResponseDtoList.isEmpty());
+    assertFalse(authorDetailsResponseDtoList.isEmpty());
   }
 
 }

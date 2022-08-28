@@ -60,6 +60,10 @@ public class GetArticleDetailsResponseDto {
     return authorId;
   }
 
+  public static GetArticleDetailsResponseDtoBuilder builder() {
+    return new GetArticleDetailsResponseDtoBuilder();
+  }
+
   public static class GetArticleDetailsResponseDtoBuilder {
 
     private Long id;

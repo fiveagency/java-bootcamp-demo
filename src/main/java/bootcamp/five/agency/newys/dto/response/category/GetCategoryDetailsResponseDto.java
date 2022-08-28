@@ -33,6 +33,10 @@ public class GetCategoryDetailsResponseDto {
     return authorId;
   }
 
+  public static GetCategoryDetailsResponseDtoBuilder builder() {
+    return new GetCategoryDetailsResponseDtoBuilder();
+  }
+
   public static class GetCategoryDetailsResponseDtoBuilder {
 
     private Long id;

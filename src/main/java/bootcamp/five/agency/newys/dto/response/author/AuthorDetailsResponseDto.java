@@ -39,6 +39,10 @@ public class AuthorDetailsResponseDto {
     return type;
   }
 
+  public static GetAuthorDetailsResponseDtoBuilder builder() {
+    return new GetAuthorDetailsResponseDtoBuilder();
+  }
+
   public static class GetAuthorDetailsResponseDtoBuilder {
 
     private Long id;

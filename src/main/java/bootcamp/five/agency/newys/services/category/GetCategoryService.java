@@ -6,7 +6,7 @@ import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsRespon
 import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,13 +39,13 @@ public class GetCategoryService {
     return Optional.of(categoryRepository.findByAuthor(author))
         .map(categories -> categories.stream().map(category ->
             categoryMapper.convertToGetCategoryDetailsResponseDto(category, author)).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
   public List<GetCategoryDetailsResponseDto> getAll() {
     return Optional.of(categoryRepository.findAll())
         .map(entities -> entities.stream().map(categoryMapper::convertToGetCategoryDetailsResponseDto).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
 }

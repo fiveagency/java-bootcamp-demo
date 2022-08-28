@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ArticleMapper {
 
   public GetArticleDetailsResponseDto convertToGetArticleDetailsResponseDto(Article article) {
-    return new GetArticleDetailsResponseDto.GetArticleDetailsResponseDtoBuilder()
+    return GetArticleDetailsResponseDto.builder()
         .id(article.getId())
         .title(article.getTitle())
         .description(article.getDescription())
@@ -27,7 +27,7 @@ public class ArticleMapper {
   }
 
   public GetAuthorArticlesResponseDto convertToGetAuthorArticlesResponseDto(Article article, Author author) {
-    return new GetAuthorArticlesResponseDto.GetAuthorArticlesResponseDtoBuilder()
+    return GetAuthorArticlesResponseDto.builder()
         .id(article.getId())
         .title(article.getTitle())
         .description(article.getDescription())
@@ -38,7 +38,7 @@ public class ArticleMapper {
   }
 
   public GetLatestArticlesResponseDto convertToGetLatestArticlesResponseDto(Article article) {
-    return new GetLatestArticlesResponseDto.GetLatestArticlesResponseDtoBuilder()
+    return GetLatestArticlesResponseDto.builder()
         .id(article.getId())
         .title(article.getTitle())
         .description(article.getDescription())
@@ -47,7 +47,7 @@ public class ArticleMapper {
   }
 
   public GetPopularArticlesResponseDto convertToGetPopularArticlesResponseDto(Article article) {
-    return new GetPopularArticlesResponseDto.GetPopularArticlesResponseDtoBuilder()
+    return GetPopularArticlesResponseDto.builder()
         .id(article.getId())
         .title(article.getTitle())
         .description(article.getDescription())
@@ -56,7 +56,7 @@ public class ArticleMapper {
   }
 
   public GetArticleInCategoryResponseDto convertToGetArticleInCategoryResponseDto(Article article, Category category) {
-    return new GetArticleInCategoryResponseDto.GetArticleInCategoryResponseDtoBuilder()
+    return GetArticleInCategoryResponseDto.builder()
         .id(article.getId())
         .title(article.getTitle())
         .description(article.getDescription())

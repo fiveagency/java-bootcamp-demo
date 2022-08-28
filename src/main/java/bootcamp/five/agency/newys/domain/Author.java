@@ -75,6 +75,10 @@ public class Author {
     return categories;
   }
 
+  public static AuthorBuilder builder() {
+    return new AuthorBuilder();
+  }
+
   public static class AuthorBuilder {
 
     private Long id;

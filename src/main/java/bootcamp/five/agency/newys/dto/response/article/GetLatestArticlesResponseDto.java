@@ -35,6 +35,10 @@ public class GetLatestArticlesResponseDto {
     return dateOfPublication;
   }
 
+  public static GetLatestArticlesResponseDtoBuilder builder() {
+    return new GetLatestArticlesResponseDtoBuilder();
+  }
+
   public static class GetLatestArticlesResponseDtoBuilder {
 
     private Long id;
