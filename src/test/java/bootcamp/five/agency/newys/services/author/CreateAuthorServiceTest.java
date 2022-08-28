@@ -1,5 +1,15 @@
 package bootcamp.five.agency.newys.services.author;
 
+import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.Data.authorDetailsDto;
+import static bootcamp.five.agency.newys.Data.authorEmail;
+import static bootcamp.five.agency.newys.Data.authorFirstName;
+import static bootcamp.five.agency.newys.Data.authorLastName;
+import static bootcamp.five.agency.newys.Data.authorType;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
@@ -8,15 +18,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static bootcamp.five.agency.newys.Data.*;
-
 public class CreateAuthorServiceTest {
 
   private CreateAuthorService createAuthorService;
-
   private AuthorRepository authorRepository;
   private AuthorMapper authorMapper;
 
@@ -34,11 +38,11 @@ public class CreateAuthorServiceTest {
 
     AuthorDetailsResponseDto response = createAuthorService.createAuthor(authorFirstName, authorLastName, authorEmail, authorType);
 
-    assertThat(response.getId() != null);
-    assertThat(response.getFirstName().equals(authorFirstName));
-    assertThat(response.getLastName().equals(authorLastName));
-    assertThat(response.getEmail().equals(authorEmail));
-    assertThat(response.getType().equals(authorType));
+    assertThat(response.getId()).isNotNull();
+    assertThat(response.getFirstName()).isEqualTo(authorFirstName);
+    assertThat(response.getLastName()).isEqualTo(authorLastName);
+    assertThat(response.getEmail()).isEqualTo(authorEmail);
+    assertThat(response.getType()).isEqualTo(authorType);
   }
 
 }

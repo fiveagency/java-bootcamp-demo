@@ -345,10 +345,10 @@ public class Data {
             .build();
     public static final AuthorDetailsResponseDto authorUpdatedDetailsDto = new AuthorDetailsResponseDto.GetAuthorDetailsResponseDtoBuilder()
             .id(authorId)
-            .firstName(authorFirstName2)
-            .lastName(authorLastName2)
-            .email(authorEmail2)
-            .type(authorType2)
+            .firstName(authorFirstName)
+            .lastName(authorLastName)
+            .email(authorEmail)
+            .type(authorType)
             .build();
 
     public static final List<AuthorDetailsResponseDto> allAuthorsDto = List.of(authorDetailsDto, authorDetailsDto2);

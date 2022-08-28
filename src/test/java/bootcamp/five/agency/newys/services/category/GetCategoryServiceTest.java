@@ -1,22 +1,31 @@
 package bootcamp.five.agency.newys.services.category;
 
+import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.Data.authorCategoryDto;
+import static bootcamp.five.agency.newys.Data.authorCategoryDto2;
+import static bootcamp.five.agency.newys.Data.authorId;
+import static bootcamp.five.agency.newys.Data.categoriesAll;
+import static bootcamp.five.agency.newys.Data.categoriesByAuthor;
+import static bootcamp.five.agency.newys.Data.category;
+import static bootcamp.five.agency.newys.Data.category2;
+import static bootcamp.five.agency.newys.Data.categoryDto;
+import static bootcamp.five.agency.newys.Data.categoryDto2;
+import static bootcamp.five.agency.newys.Data.categoryId;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.dto.response.category.GetAuthorCategoriesResponseDto;
 import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
-import java.util.List;
-import java.util.Optional;
-
 import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static bootcamp.five.agency.newys.Data.*;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
 public class GetCategoryServiceTest {
 
@@ -40,7 +49,7 @@ public class GetCategoryServiceTest {
 
     GetCategoryDetailsResponseDto getCategoryDetailsResponseDto = getCategoryService.getCategoryById(categoryId);
 
-    assertThat(getCategoryDetailsResponseDto.getId().equals(categoryId));
+    assertThat(getCategoryDetailsResponseDto.getId()).isEqualTo(categoryId);
   }
 
   @Test
@@ -52,8 +61,7 @@ public class GetCategoryServiceTest {
 
     List<GetAuthorCategoriesResponseDto> getAuthorCategoriesResponseDtoList = getCategoryService.getCategoriesByAuthor(authorId);
 
-    assertThat(getAuthorCategoriesResponseDtoList.stream().anyMatch(
-            getAuthorCategoriesResponseDto -> getAuthorCategoriesResponseDto.getAuthorId().equals(authorId)));
+    assertThat(getAuthorCategoriesResponseDtoList).allMatch(dto -> dto.getAuthorId().equals(authorId));
   }
 
   @Test
@@ -64,9 +72,9 @@ public class GetCategoryServiceTest {
 
     List<GetCategoryDetailsResponseDto> getCategoryDetailsResponseDtoList = getCategoryService.getAll();
 
-    assertThat(getCategoryDetailsResponseDtoList.size() == 2);
-    assertThat(getCategoryDetailsResponseDtoList.contains(categoryDto));
-    assertThat(getCategoryDetailsResponseDtoList.contains(categoryDto2));
+    assertThat(getCategoryDetailsResponseDtoList.size()).isEqualTo(2);
+    assertThat(getCategoryDetailsResponseDtoList).contains(categoryDto);
+    assertThat(getCategoryDetailsResponseDtoList).contains(categoryDto2);
   }
 
 }

@@ -1,19 +1,28 @@
 package bootcamp.five.agency.newys.services.author;
 
-import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
-
-import java.util.List;
-import java.util.Optional;
-
-import bootcamp.five.agency.newys.mappers.AuthorMapper;
-import bootcamp.five.agency.newys.repository.AuthorRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.Data.author2;
+import static bootcamp.five.agency.newys.Data.authorDetailsDto;
+import static bootcamp.five.agency.newys.Data.authorDetailsDto2;
+import static bootcamp.five.agency.newys.Data.authorEmail;
+import static bootcamp.five.agency.newys.Data.authorFirstName;
+import static bootcamp.five.agency.newys.Data.authorId;
+import static bootcamp.five.agency.newys.Data.authorLastName;
+import static bootcamp.five.agency.newys.Data.authorNoArticles;
+import static bootcamp.five.agency.newys.Data.authorType;
+import static bootcamp.five.agency.newys.Data.authorsAll;
+import static bootcamp.five.agency.newys.Data.authorsOfSameType;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static bootcamp.five.agency.newys.Data.*;
+
+import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.mappers.AuthorMapper;
+import bootcamp.five.agency.newys.repository.AuthorRepository;
+import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class GetAuthorServiceTest {
 
@@ -35,7 +44,7 @@ public class GetAuthorServiceTest {
 
     AuthorDetailsResponseDto response = getAuthorService.getAuthorById(authorId);
 
-    assertThat(response.getId().equals(authorId));
+    assertThat(response.getId()).isEqualTo(authorId);
   }
 
   @Test
@@ -45,8 +54,8 @@ public class GetAuthorServiceTest {
 
     AuthorDetailsResponseDto response = getAuthorService.getAuthorByFirstNameAndLastName(authorFirstName, authorLastName);
 
-    assertThat(response.getFirstName().equals(authorFirstName));
-    assertThat(response.getLastName().equals(authorLastName));
+    assertThat(response.getFirstName()).isEqualTo(authorFirstName);
+    assertThat(response.getLastName()).isEqualTo(authorLastName);
   }
 
   @Test
@@ -56,7 +65,7 @@ public class GetAuthorServiceTest {
 
     AuthorDetailsResponseDto response = getAuthorService.getAuthorByEmail(authorEmail);
 
-    assertThat(response.getEmail().equals(authorEmail));
+    assertThat(response.getEmail()).isEqualTo(authorEmail);
   }
 
   @Test void getNumberOfArticles_NumberOfArticlesIsZero_True() {
@@ -64,7 +73,7 @@ public class GetAuthorServiceTest {
 
     Integer numberOfArticles = getAuthorService.getNumberOfArticles(authorId);
 
-    assertThat(numberOfArticles == 0);
+    assertThat(numberOfArticles).isEqualTo(0);
   }
 
   @Test
@@ -75,9 +84,8 @@ public class GetAuthorServiceTest {
 
     List<AuthorDetailsResponseDto> authorDetailsResponseDtoList = getAuthorService.getByType(authorType);
 
-    assertThat(!authorDetailsResponseDtoList.isEmpty());
-    assertThat(authorDetailsResponseDtoList.stream().anyMatch(
-            getAuthorDetailsResponseDto -> getAuthorDetailsResponseDto.getType().equals(authorType)));
+    assertThat(authorDetailsResponseDtoList).isNotEmpty();
+    assertThat(authorDetailsResponseDtoList).allMatch(dto -> dto.getType().equals(authorType));
   }
 
   @Test
@@ -88,7 +96,7 @@ public class GetAuthorServiceTest {
 
     List<AuthorDetailsResponseDto> authorDetailsResponseDtoList = getAuthorService.getAll();
 
-    assertThat(!authorDetailsResponseDtoList.isEmpty());
+    assertThat(authorDetailsResponseDtoList).isNotEmpty();
   }
 
 }

@@ -1,25 +1,37 @@
 package bootcamp.five.agency.newys.services.category;
 
+import static bootcamp.five.agency.newys.Data.article;
+import static bootcamp.five.agency.newys.Data.articleId;
+import static bootcamp.five.agency.newys.Data.articleInCategoryDto;
+import static bootcamp.five.agency.newys.Data.articleWithCategory;
+import static bootcamp.five.agency.newys.Data.author2;
+import static bootcamp.five.agency.newys.Data.authorId2;
+import static bootcamp.five.agency.newys.Data.category;
+import static bootcamp.five.agency.newys.Data.categoryAuhtorChangedDto;
+import static bootcamp.five.agency.newys.Data.categoryAuthorChanged;
+import static bootcamp.five.agency.newys.Data.categoryDescription2;
+import static bootcamp.five.agency.newys.Data.categoryId;
+import static bootcamp.five.agency.newys.Data.categoryName2;
+import static bootcamp.five.agency.newys.Data.categoryUpdated;
+import static bootcamp.five.agency.newys.Data.categoryUpdatedDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Category;
 import bootcamp.five.agency.newys.dto.response.article.GetArticleInCategoryResponseDto;
 import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
-import java.util.List;
-import java.util.Optional;
-
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static bootcamp.five.agency.newys.Data.*;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 
 public class UpdateCategoryServiceTest {
 
@@ -51,9 +63,9 @@ public class UpdateCategoryServiceTest {
     GetCategoryDetailsResponseDto getCategoryDetailsResponseDto = updateCategoryService.updateCategory(categoryId,
             categoryName2, categoryDescription2);
 
-    assertThat(getCategoryDetailsResponseDto.getId().equals(categoryId));
-    assertThat(getCategoryDetailsResponseDto.getName().equals(categoryName2));
-    assertThat(getCategoryDetailsResponseDto.getDescription().equals(categoryDescription2));
+    assertThat(getCategoryDetailsResponseDto.getId()).isEqualTo(categoryId);
+    assertThat(getCategoryDetailsResponseDto.getName()).isEqualTo(categoryName2);
+    assertThat(getCategoryDetailsResponseDto.getDescription()).isEqualTo(categoryDescription2);
   }
 
   @Test
@@ -65,7 +77,7 @@ public class UpdateCategoryServiceTest {
 
     GetCategoryDetailsResponseDto getCategoryDetailsResponseDto = updateCategoryService.changeCategoryAuthor(categoryId, authorId2);
 
-    assertThat(getCategoryDetailsResponseDto.getAuthorId().equals(authorId2));
+    assertThat(getCategoryDetailsResponseDto.getAuthorId()).isEqualTo(authorId2);
   }
 
   @Test
@@ -78,7 +90,7 @@ public class UpdateCategoryServiceTest {
     updateCategoryService.addArticleToCategory(categoryId, articleId);
     List<GetArticleInCategoryResponseDto> getArticleInCategoryResponseDtoList = getAddedArticlesService.getAddedArticles(categoryId);
 
-    assertThat(!getArticleInCategoryResponseDtoList.isEmpty());
+    assertThat(getArticleInCategoryResponseDtoList).isNotEmpty();
   }
 
 }

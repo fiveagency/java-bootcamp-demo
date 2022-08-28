@@ -1,21 +1,35 @@
 package bootcamp.five.agency.newys.services.article;
 
+import static bootcamp.five.agency.newys.Data.article;
+import static bootcamp.five.agency.newys.Data.article8Likes;
+import static bootcamp.five.agency.newys.Data.article8LikesDetailsDto;
+import static bootcamp.five.agency.newys.Data.article9Likes;
+import static bootcamp.five.agency.newys.Data.article9LikesDetailsDto;
+import static bootcamp.five.agency.newys.Data.articleContent2;
+import static bootcamp.five.agency.newys.Data.articleDescription2;
+import static bootcamp.five.agency.newys.Data.articleId;
+import static bootcamp.five.agency.newys.Data.articleImageUrl2;
+import static bootcamp.five.agency.newys.Data.articleTitle2;
+import static bootcamp.five.agency.newys.Data.author2;
+import static bootcamp.five.agency.newys.Data.authorId2;
+import static bootcamp.five.agency.newys.Data.updatedArticle;
+import static bootcamp.five.agency.newys.Data.updatedArticleAuthorChanged;
+import static bootcamp.five.agency.newys.Data.updatedArticleAuthorChangedDto;
+import static bootcamp.five.agency.newys.Data.updatedArticleDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static bootcamp.five.agency.newys.Data.*;
 
 public class UpdateArticleServiceTest {
 
@@ -44,11 +58,11 @@ public class UpdateArticleServiceTest {
     GetArticleDetailsResponseDto response = updateArticleService.updateArticle(articleId, articleTitle2,
             articleDescription2, articleImageUrl2, articleContent2);
 
-    assertThat(response.getId().equals(articleId));
-    assertThat(response.getTitle().equals(articleTitle2));
-    assertThat(response.getDescription().equals(articleDescription2));
-    assertThat(response.getImageUrl().equals(articleImageUrl2));
-    assertThat(response.getContent().equals(articleContent2));
+    assertThat(response.getId()).isEqualTo(articleId);
+    assertThat(response.getTitle()).isEqualTo(articleTitle2);
+    assertThat(response.getDescription()).isEqualTo(articleDescription2);
+    assertThat(response.getImageUrl()).isEqualTo(articleImageUrl2);
+    assertThat(response.getContent()).isEqualTo(articleContent2);
   }
 
   @Test
@@ -60,7 +74,7 @@ public class UpdateArticleServiceTest {
 
     GetArticleDetailsResponseDto response = updateArticleService.changeArticleAuthor(articleId, authorId2);
 
-    assertThat(response.getAuthorId().equals(authorId2));
+    assertThat(response.getAuthorId()).isEqualTo(authorId2);
   }
 
   @Test
@@ -74,7 +88,7 @@ public class UpdateArticleServiceTest {
 
     GetArticleDetailsResponseDto likedArticleResponse = updateArticleService.likeArticle(articleId);
 
-    assertThat(articleResponse.getNumLikes() < likedArticleResponse.getNumLikes());
+    assertThat(articleResponse.getNumLikes()).isLessThan(likedArticleResponse.getNumLikes());
   }
 
   @Test
@@ -88,7 +102,7 @@ public class UpdateArticleServiceTest {
 
     GetArticleDetailsResponseDto unlikedArticleResponse = updateArticleService.unlikeArticle(articleId);
 
-    assertThat(articleResponse.getNumLikes() > unlikedArticleResponse.getNumLikes());
+    assertThat(articleResponse.getNumLikes()).isGreaterThan(unlikedArticleResponse.getNumLikes());
   }
 
 }

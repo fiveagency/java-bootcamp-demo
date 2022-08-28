@@ -1,34 +1,36 @@
 package bootcamp.five.agency.newys.services.article;
 
+import static bootcamp.five.agency.newys.Data.article;
+import static bootcamp.five.agency.newys.Data.articleContent;
+import static bootcamp.five.agency.newys.Data.articleDateOfPublicationNow;
+import static bootcamp.five.agency.newys.Data.articleDescription;
+import static bootcamp.five.agency.newys.Data.articleDetailsDto;
+import static bootcamp.five.agency.newys.Data.articleImageUrl;
+import static bootcamp.five.agency.newys.Data.articleTitle;
+import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.Data.authorId;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
-import java.util.Optional;
-
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.any;
-import static bootcamp.five.agency.newys.Data.*;
-
-//@ExtendWith(MockitoExtension.class)
 public class CreateArticleServiceTest {
 
-  //@InjectMocks
   private CreateArticleService createArticleService;
 
-  //@Mock
   private ArticleRepository articleRepository;
-  //@Mock
   private AuthorRepository authorRepository;
 
-  //@Mock
   private ArticleMapper articleMapper;
 
   @BeforeEach
@@ -48,13 +50,13 @@ public class CreateArticleServiceTest {
     GetArticleDetailsResponseDto response = createArticleService.createArticle(articleTitle, articleDescription,
             articleImageUrl, articleDateOfPublicationNow, articleContent, authorId);
 
-    assertThat(response.getId() != null);
-    assertThat(response.getTitle().equals(articleTitle));
-    assertThat(response.getDescription().equals(articleDescription));
-    assertThat(response.getImageUrl().equals(articleImageUrl));
-    assertThat(response.getDateOfPublication().equals(articleDateOfPublicationNow));
-    assertThat(response.getContent().equals(articleContent));
-    assertThat(response.getAuthorId().equals(authorId));
+    assertThat(response.getId()).isNotNull();
+    assertThat(response.getTitle()).isEqualTo(articleTitle);
+    assertThat(response.getDescription()).isEqualTo(articleDescription);
+    assertThat(response.getImageUrl()).isEqualTo(articleImageUrl);
+    assertThat(response.getDateOfPublication()).isEqualTo(articleDateOfPublicationNow);
+    assertThat(response.getContent()).isEqualTo(articleContent);
+    assertThat(response.getAuthorId()).isEqualTo(authorId);
   }
 
 }

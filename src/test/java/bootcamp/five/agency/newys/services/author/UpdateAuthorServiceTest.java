@@ -1,19 +1,29 @@
 package bootcamp.five.agency.newys.services.author;
 
+import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.Data.authorEmail;
+import static bootcamp.five.agency.newys.Data.authorEmail2;
+import static bootcamp.five.agency.newys.Data.authorFirstName;
+import static bootcamp.five.agency.newys.Data.authorFirstName2;
+import static bootcamp.five.agency.newys.Data.authorId;
+import static bootcamp.five.agency.newys.Data.authorLastName;
+import static bootcamp.five.agency.newys.Data.authorLastName2;
+import static bootcamp.five.agency.newys.Data.authorType;
+import static bootcamp.five.agency.newys.Data.authorType2;
+import static bootcamp.five.agency.newys.Data.authorUpdated;
+import static bootcamp.five.agency.newys.Data.authorUpdatedDetailsDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static bootcamp.five.agency.newys.Data.*;
-import static org.mockito.Mockito.when;
 
 public class UpdateAuthorServiceTest {
 
@@ -37,11 +47,11 @@ public class UpdateAuthorServiceTest {
     AuthorDetailsResponseDto authorDetailsResponseDto = updateAuthorService.updateAuthor(authorId, authorFirstName2,
             authorLastName2, authorEmail2, authorType2);
 
-    assertThat(authorDetailsResponseDto.getId().equals(authorId));
-    assertThat(authorDetailsResponseDto.getFirstName().equals(authorFirstName2));
-    assertThat(authorDetailsResponseDto.getLastName().equals(authorLastName2));
-    assertThat(authorDetailsResponseDto.getEmail().equals(authorEmail2));
-    assertThat(authorDetailsResponseDto.getType().equals(authorType2));
+    assertThat(authorDetailsResponseDto.getId()).isEqualTo(authorId);
+    assertThat(authorDetailsResponseDto.getFirstName()).isEqualTo(authorFirstName);
+    assertThat(authorDetailsResponseDto.getLastName()).isEqualTo(authorLastName);
+    assertThat(authorDetailsResponseDto.getEmail()).isEqualTo(authorEmail);
+    assertThat(authorDetailsResponseDto.getType()).isEqualTo(authorType);
   }
 
 }

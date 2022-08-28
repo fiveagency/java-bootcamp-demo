@@ -1,31 +1,48 @@
 package bootcamp.five.agency.newys.services.article;
 
+import static bootcamp.five.agency.newys.Data.allArticles;
+import static bootcamp.five.agency.newys.Data.article;
+import static bootcamp.five.agency.newys.Data.article2;
+import static bootcamp.five.agency.newys.Data.article8Likes;
+import static bootcamp.five.agency.newys.Data.article9Likes;
+import static bootcamp.five.agency.newys.Data.articleDetailsDto;
+import static bootcamp.five.agency.newys.Data.articleDetailsDto2;
+import static bootcamp.five.agency.newys.Data.articleFrom3Days;
+import static bootcamp.five.agency.newys.Data.articleFrom5Days;
+import static bootcamp.five.agency.newys.Data.articleId;
+import static bootcamp.five.agency.newys.Data.articlesByAuthor;
+import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.Data.authorArticleDto;
+import static bootcamp.five.agency.newys.Data.authorArticleDto2;
+import static bootcamp.five.agency.newys.Data.authorId;
+import static bootcamp.five.agency.newys.Data.latestArticleDto;
+import static bootcamp.five.agency.newys.Data.latestArticleDto2;
+import static bootcamp.five.agency.newys.Data.latestArticles;
+import static bootcamp.five.agency.newys.Data.popularArticleDto;
+import static bootcamp.five.agency.newys.Data.popularArticleDto2;
+import static bootcamp.five.agency.newys.Data.popularArticles;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import bootcamp.five.agency.newys.dto.response.article.GetAuthorArticlesResponseDto;
 import bootcamp.five.agency.newys.dto.response.article.GetLatestArticlesResponseDto;
 import bootcamp.five.agency.newys.dto.response.article.GetPopularArticlesResponseDto;
-
-import java.util.List;
-import java.util.Optional;
-
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyInt;
-import static bootcamp.five.agency.newys.Data.*;
 
 public class GetArticleServiceTest {
 
   private GetArticleService getArticleService;
-
   private ArticleRepository articleRepository;
   private AuthorRepository authorRepository;
   private ArticleMapper articleMapper;
@@ -45,7 +62,7 @@ public class GetArticleServiceTest {
 
     GetArticleDetailsResponseDto response = getArticleService.getArticleById(articleId);
 
-    assertThat(response.getId().equals(articleId));
+    assertThat(response.getId()).isEqualTo(articleId);
   }
 
   @Test
@@ -57,36 +74,35 @@ public class GetArticleServiceTest {
 
     List<GetAuthorArticlesResponseDto> response = getArticleService.getArticlesByAuthor(authorId);
 
-    assertThat(response.stream().anyMatch(
-            getAuthorArticlesResponseDto -> getAuthorArticlesResponseDto.getAuthorId().equals(authorId)));
+    assertThat(response).allMatch(dto -> dto.getAuthorId().equals(authorId));
   }
 
   @Test
   public void getLatestArticles_LatestArticlesFetched_True() {
     when(articleRepository.findByDateOfPublicationAfter(any(java.sql.Date.class))).thenReturn(latestArticles);
-    when(articleMapper.convertToGetLatestArticlesResponseDto(article)).thenReturn(latestArticleDto);
-    when(articleMapper.convertToGetLatestArticlesResponseDto(article2)).thenReturn(latestArticleDto2);
+    when(articleMapper.convertToGetLatestArticlesResponseDto(articleFrom3Days)).thenReturn(latestArticleDto);
+    when(articleMapper.convertToGetLatestArticlesResponseDto(articleFrom5Days)).thenReturn(latestArticleDto2);
 
     List<GetLatestArticlesResponseDto> responseList = getArticleService.getLatestArticles();
 
-    assertThat(!responseList.isEmpty());
-    assertThat(responseList.size() == 2);
-    assertThat(responseList.contains(latestArticleDto));
-    assertThat(responseList.contains(latestArticleDto2));
+    assertThat(responseList).isNotEmpty();
+    assertThat(responseList.size()).isEqualTo(2);
+    assertThat(responseList).contains(latestArticleDto);
+    assertThat(responseList).contains(latestArticleDto2);
   }
 
   @Test
   public void getPopularArticles_PopularArticlesFetched_True() {
     when(articleRepository.findByNumLikesGreaterThan(anyInt())).thenReturn(popularArticles);
-    when(articleMapper.convertToGetPopularArticlesResponseDto(article)).thenReturn(popularArticleDto);
-    when(articleMapper.convertToGetPopularArticlesResponseDto(article2)).thenReturn(popularArticleDto2);
+    when(articleMapper.convertToGetPopularArticlesResponseDto(article8Likes)).thenReturn(popularArticleDto);
+    when(articleMapper.convertToGetPopularArticlesResponseDto(article9Likes)).thenReturn(popularArticleDto2);
 
     List<GetPopularArticlesResponseDto> responseList = getArticleService.getPopularArticles();
 
-    assertThat(!responseList.isEmpty());
-    assertThat(responseList.size() == 2);
-    assertThat(responseList.contains(popularArticleDto));
-    assertThat(responseList.contains(popularArticleDto2));
+    assertThat(responseList).isNotEmpty();
+    assertThat(responseList.size()).isEqualTo(2);
+    assertThat(responseList).contains(popularArticleDto);
+    assertThat(responseList).contains(popularArticleDto2);
   }
 
   @Test
@@ -97,10 +113,10 @@ public class GetArticleServiceTest {
 
     List<GetArticleDetailsResponseDto> responseList = getArticleService.getAll();
 
-    assertThat(!responseList.isEmpty());
-    assertThat(responseList.size() == 2);
-    assertThat(responseList.contains(articleDetailsDto));
-    assertThat(responseList.contains(articleDetailsDto2));
+    assertThat(responseList).isNotEmpty();
+    assertThat(responseList.size()).isEqualTo(2);
+    assertThat(responseList).contains(articleDetailsDto);
+    assertThat(responseList).contains(articleDetailsDto2);
   }
 
 }

@@ -1,11 +1,31 @@
 package bootcamp.five.agency.newys.controller;
 
+import static bootcamp.five.agency.newys.Data.allAuthorsDto;
+import static bootcamp.five.agency.newys.Data.articleId;
+import static bootcamp.five.agency.newys.Data.authorDetailsDto;
+import static bootcamp.five.agency.newys.Data.authorId;
+import static bootcamp.five.agency.newys.Data.authorUpdatedDetailsDto;
+import static bootcamp.five.agency.newys.Data.createAuthorRequestDto;
+import static bootcamp.five.agency.newys.Data.updateAuthorRequestDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.DeleteAuthorService;
 import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import bootcamp.five.agency.newys.services.author.UpdateAuthorService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,16 +35,6 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static bootcamp.five.agency.newys.Data.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -42,9 +52,9 @@ public class AuthorControllerIntTest {
     private CreateAuthorService createAuthorService;
     @MockBean
     private UpdateAuthorService updateAuthorService;
+
     @MockBean
     private DeleteAuthorService deleteAuthorService;
-
 
     @Test
     public void testGetAuthors() throws Exception {
@@ -54,11 +64,12 @@ public class AuthorControllerIntTest {
                 .andExpect(status().isOk()).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response != null);
+        assertThat(response).isNotNull();
+
         final String jsonResponse = response.getContentAsString();
-        List<AuthorDetailsResponseDto> content = objectMapper.readValue(jsonResponse, List.class);
-        assertThat(content != null);
-        assertThat(!content.isEmpty());
+        List<AuthorDetailsResponseDto> content = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
+        assertThat(content).isNotNull();
+        assertThat(content).isNotEmpty();
     }
 
     @Test
@@ -69,11 +80,13 @@ public class AuthorControllerIntTest {
                 .andExpect(status().isOk()).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response != null);
+        assertThat(response).isNotNull();
+
         final String jsonResponse = response.getContentAsString();
         AuthorDetailsResponseDto content = objectMapper.readValue(jsonResponse, AuthorDetailsResponseDto.class);
-        assertThat(content != null);
-        assertThat(content.getId().equals(authorId));
+
+        assertThat(content).isNotNull();
+        assertThat(content.getId()).isEqualTo(authorId);
 
     }
 
@@ -88,15 +101,16 @@ public class AuthorControllerIntTest {
                 .andExpect(status().isCreated()).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response != null);
+        assertThat(response).isNotNull();
         final String jsonResponse = response.getContentAsString();
         AuthorDetailsResponseDto content = objectMapper.readValue(jsonResponse, AuthorDetailsResponseDto.class);
-        assertThat(content != null);
-        assertThat(content.getId() != null);
-        assertThat(content.getFirstName().equals(createAuthorRequestDto.getFirstName()));
-        assertThat(content.getLastName().equals(createAuthorRequestDto.getLastName()));
-        assertThat(content.getEmail().equals(createAuthorRequestDto.getEmail()));
-        assertThat(content.getType().equals(createAuthorRequestDto.getType()));
+
+        assertThat(content).isNotNull();
+        assertThat(content.getId()).isNotNull();
+        assertThat(content.getFirstName()).isEqualTo(createAuthorRequestDto.getFirstName());
+        assertThat(content.getLastName()).isEqualTo(createAuthorRequestDto.getLastName());
+        assertThat(content.getEmail()).isEqualTo(createAuthorRequestDto.getEmail());
+        assertThat(content.getType()).isEqualTo(createAuthorRequestDto.getType());
     }
 
     @Test
@@ -111,23 +125,26 @@ public class AuthorControllerIntTest {
                 .andExpect(status().isOk()).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response != null);
+        assertThat(response).isNotNull();
         final String jsonResponse = response.getContentAsString();
         AuthorDetailsResponseDto content = objectMapper.readValue(jsonResponse, AuthorDetailsResponseDto.class);
-        assertThat(content != null);
-        assertThat(content.getId().equals(authorId));
-        assertThat(content.getFirstName().equals(updateAuthorRequestDto.getFirstName()));
-        assertThat(content.getLastName().equals(updateAuthorRequestDto.getLastName()));
-        assertThat(content.getEmail().equals(updateAuthorRequestDto.getEmail()));
-        assertThat(content.getType().equals(updateAuthorRequestDto.getType()));
+
+        assertThat(content).isNotNull();
+        assertThat(content.getId()).isEqualTo(authorId);
+        assertThat(content.getFirstName()).isEqualTo(updateAuthorRequestDto.getFirstName());
+        assertThat(content.getLastName()).isEqualTo(updateAuthorRequestDto.getLastName());
+        assertThat(content.getEmail()).isEqualTo(updateAuthorRequestDto.getEmail());
+        assertThat(content.getType()).isEqualTo(updateAuthorRequestDto.getType());
     }
 
     @Test
     public void testDeleteAuthor() throws Exception {
+        doNothing().when(deleteAuthorService).deleteAuthorById(any());
+
         MvcResult result = mockMvc.perform(delete("/author/" + articleId + "/delete"))
                 .andExpect(status().isNoContent()).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response != null);
+        assertThat(response).isNotNull();
     }
 }

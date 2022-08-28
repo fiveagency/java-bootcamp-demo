@@ -1,12 +1,13 @@
 package bootcamp.five.agency.newys.mappers;
 
+import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.Data.category;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import bootcamp.five.agency.newys.dto.response.category.GetAuthorCategoriesResponseDto;
 import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static bootcamp.five.agency.newys.Data.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class CategoryMapperTest {
 
@@ -21,21 +22,21 @@ public class CategoryMapperTest {
     public void testConvertToGetCategoryDetailsResponseDto() {
         GetCategoryDetailsResponseDto categoryDto = categoryMapper.convertToGetCategoryDetailsResponseDto(category);
 
-        assertThat(categoryDto.getId() == category.getId());
-        assertThat(categoryDto.getName().equals(category.getName()));
-        assertThat(categoryDto.getDescription().equals(category.getDescription()));
-        assertThat(categoryDto.getAuthorId().equals(category.getAuthor().getId()));
+        assertThat(categoryDto.getId()).isEqualTo(category.getId());
+        assertThat(categoryDto.getName()).isEqualTo(category.getName());
+        assertThat(categoryDto.getDescription()).isEqualTo(category.getDescription());
+        assertThat(categoryDto.getAuthorId()).isEqualTo(category.getAuthor().getId());
     }
 
     @Test
     public void testConvertToGetCategoryDetailsResponseDtoWithAuthor() {
         GetAuthorCategoriesResponseDto authorCategoryDto = categoryMapper.convertToGetCategoryDetailsResponseDto(category, author);
 
-        assertThat(authorCategoryDto.getId() == category.getId());
-        assertThat(authorCategoryDto.getName().equals(category.getName()));
-        assertThat(authorCategoryDto.getDescription().equals(category.getDescription()));
-        assertThat(authorCategoryDto.getAuthorId() == author.getId());
-        assertThat(authorCategoryDto.getAuthorFirstName().equals(author.getFirstName()));
-        assertThat(authorCategoryDto.getAuthorLastName().equals(author.getLastName()));
+        assertThat(authorCategoryDto.getId()).isEqualTo(category.getId());
+        assertThat(authorCategoryDto.getName()).isEqualTo(category.getName());
+        assertThat(authorCategoryDto.getDescription()).isEqualTo(category.getDescription());
+        assertThat(authorCategoryDto.getAuthorId()).isEqualTo(author.getId());
+        assertThat(authorCategoryDto.getAuthorFirstName()).isEqualTo(author.getFirstName());
+        assertThat(authorCategoryDto.getAuthorLastName()).isEqualTo(author.getLastName());
     }
 }
