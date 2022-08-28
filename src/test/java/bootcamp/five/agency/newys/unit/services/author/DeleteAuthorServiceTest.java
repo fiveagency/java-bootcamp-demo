@@ -1,8 +1,10 @@
-package bootcamp.five.agency.newys.services.author;
+package bootcamp.five.agency.newys.unit.services.author;
 
 import bootcamp.five.agency.newys.exceptions.AuthorNotFoundException;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import bootcamp.five.agency.newys.services.author.DeleteAuthorService;
+import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static bootcamp.five.agency.newys.Data.*;
+import static bootcamp.five.agency.newys.unit.Data.*;
 
 public class DeleteAuthorServiceTest {
 

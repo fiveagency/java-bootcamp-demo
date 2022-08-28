@@ -1,17 +1,17 @@
-package bootcamp.five.agency.newys.services.author;
+package bootcamp.five.agency.newys.unit.services.author;
 
-import static bootcamp.five.agency.newys.Data.author;
-import static bootcamp.five.agency.newys.Data.author2;
-import static bootcamp.five.agency.newys.Data.authorDetailsDto;
-import static bootcamp.five.agency.newys.Data.authorDetailsDto2;
-import static bootcamp.five.agency.newys.Data.authorEmail;
-import static bootcamp.five.agency.newys.Data.authorFirstName;
-import static bootcamp.five.agency.newys.Data.authorId;
-import static bootcamp.five.agency.newys.Data.authorLastName;
-import static bootcamp.five.agency.newys.Data.authorNoArticles;
-import static bootcamp.five.agency.newys.Data.authorType;
-import static bootcamp.five.agency.newys.Data.authorsAll;
-import static bootcamp.five.agency.newys.Data.authorsOfSameType;
+import static bootcamp.five.agency.newys.unit.Data.author;
+import static bootcamp.five.agency.newys.unit.Data.author2;
+import static bootcamp.five.agency.newys.unit.Data.authorDetailsDto;
+import static bootcamp.five.agency.newys.unit.Data.authorDetailsDto2;
+import static bootcamp.five.agency.newys.unit.Data.authorEmail;
+import static bootcamp.five.agency.newys.unit.Data.authorFirstName;
+import static bootcamp.five.agency.newys.unit.Data.authorId;
+import static bootcamp.five.agency.newys.unit.Data.authorLastName;
+import static bootcamp.five.agency.newys.unit.Data.authorNoArticles;
+import static bootcamp.five.agency.newys.unit.Data.authorType;
+import static bootcamp.five.agency.newys.unit.Data.authorsAll;
+import static bootcamp.five.agency.newys.unit.Data.authorsOfSameType;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 public class GetAuthorServiceTest {
 
-  private  GetAuthorService getAuthorService;
+  private GetAuthorService getAuthorService;
   private AuthorRepository authorRepository;
   private AuthorMapper authorMapper;
 

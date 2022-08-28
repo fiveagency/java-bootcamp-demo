@@ -1,4 +1,4 @@
-package bootcamp.five.agency.newys;
+package bootcamp.five.agency.newys.unit;
 
 import bootcamp.five.agency.newys.domain.Article;
 import bootcamp.five.agency.newys.domain.Author;

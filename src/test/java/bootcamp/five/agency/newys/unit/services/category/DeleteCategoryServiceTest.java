@@ -1,8 +1,10 @@
-package bootcamp.five.agency.newys.services.category;
+package bootcamp.five.agency.newys.unit.services.category;
 
 import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
+import bootcamp.five.agency.newys.services.category.DeleteCategoryService;
+import bootcamp.five.agency.newys.services.category.GetCategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.mockito.Mockito.mock;
-import static bootcamp.five.agency.newys.Data.*;
+import static bootcamp.five.agency.newys.unit.Data.*;
 import static org.mockito.Mockito.when;
 
 public class DeleteCategoryServiceTest {

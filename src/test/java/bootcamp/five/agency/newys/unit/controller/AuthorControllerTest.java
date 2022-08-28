@@ -1,17 +1,18 @@
-package bootcamp.five.agency.newys.controller;
+package bootcamp.five.agency.newys.unit.controller;
 
-import static bootcamp.five.agency.newys.Data.allAuthorsDto;
-import static bootcamp.five.agency.newys.Data.authorDetailsDto;
-import static bootcamp.five.agency.newys.Data.authorId;
-import static bootcamp.five.agency.newys.Data.authorUpdatedDetailsDto;
-import static bootcamp.five.agency.newys.Data.createAuthorRequestDto;
-import static bootcamp.five.agency.newys.Data.updateAuthorRequestDto;
+import static bootcamp.five.agency.newys.unit.Data.allAuthorsDto;
+import static bootcamp.five.agency.newys.unit.Data.authorDetailsDto;
+import static bootcamp.five.agency.newys.unit.Data.authorId;
+import static bootcamp.five.agency.newys.unit.Data.authorUpdatedDetailsDto;
+import static bootcamp.five.agency.newys.unit.Data.createAuthorRequestDto;
+import static bootcamp.five.agency.newys.unit.Data.updateAuthorRequestDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import bootcamp.five.agency.newys.controller.AuthorController;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.DeleteAuthorService;

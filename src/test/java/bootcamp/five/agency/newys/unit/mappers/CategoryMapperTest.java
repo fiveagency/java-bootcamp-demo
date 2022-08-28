@@ -1,11 +1,12 @@
-package bootcamp.five.agency.newys.mappers;
+package bootcamp.five.agency.newys.unit.mappers;
 
-import static bootcamp.five.agency.newys.Data.author;
-import static bootcamp.five.agency.newys.Data.category;
+import static bootcamp.five.agency.newys.unit.Data.author;
+import static bootcamp.five.agency.newys.unit.Data.category;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bootcamp.five.agency.newys.dto.response.category.GetAuthorCategoriesResponseDto;
 import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsResponseDto;
+import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

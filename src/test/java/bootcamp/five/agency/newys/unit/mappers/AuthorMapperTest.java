@@ -1,9 +1,10 @@
-package bootcamp.five.agency.newys.mappers;
+package bootcamp.five.agency.newys.unit.mappers;
 
-import static bootcamp.five.agency.newys.Data.author;
+import static bootcamp.five.agency.newys.unit.Data.author;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

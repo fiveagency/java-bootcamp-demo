@@ -1,16 +1,16 @@
-package bootcamp.five.agency.newys.services.category;
+package bootcamp.five.agency.newys.unit.services.category;
 
-import static bootcamp.five.agency.newys.Data.author;
-import static bootcamp.five.agency.newys.Data.authorCategoryDto;
-import static bootcamp.five.agency.newys.Data.authorCategoryDto2;
-import static bootcamp.five.agency.newys.Data.authorId;
-import static bootcamp.five.agency.newys.Data.categoriesAll;
-import static bootcamp.five.agency.newys.Data.categoriesByAuthor;
-import static bootcamp.five.agency.newys.Data.category;
-import static bootcamp.five.agency.newys.Data.category2;
-import static bootcamp.five.agency.newys.Data.categoryDto;
-import static bootcamp.five.agency.newys.Data.categoryDto2;
-import static bootcamp.five.agency.newys.Data.categoryId;
+import static bootcamp.five.agency.newys.unit.Data.author;
+import static bootcamp.five.agency.newys.unit.Data.authorCategoryDto;
+import static bootcamp.five.agency.newys.unit.Data.authorCategoryDto2;
+import static bootcamp.five.agency.newys.unit.Data.authorId;
+import static bootcamp.five.agency.newys.unit.Data.categoriesAll;
+import static bootcamp.five.agency.newys.unit.Data.categoriesByAuthor;
+import static bootcamp.five.agency.newys.unit.Data.category;
+import static bootcamp.five.agency.newys.unit.Data.category2;
+import static bootcamp.five.agency.newys.unit.Data.categoryDto;
+import static bootcamp.five.agency.newys.unit.Data.categoryDto2;
+import static bootcamp.five.agency.newys.unit.Data.categoryId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
@@ -22,6 +22,7 @@ import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsRespon
 import bootcamp.five.agency.newys.mappers.CategoryMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import bootcamp.five.agency.newys.repository.CategoryRepository;
+import bootcamp.five.agency.newys.services.category.GetCategoryService;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;

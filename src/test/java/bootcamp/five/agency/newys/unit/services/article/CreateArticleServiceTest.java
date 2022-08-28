@@ -1,14 +1,14 @@
-package bootcamp.five.agency.newys.services.article;
+package bootcamp.five.agency.newys.unit.services.article;
 
-import static bootcamp.five.agency.newys.Data.article;
-import static bootcamp.five.agency.newys.Data.articleContent;
-import static bootcamp.five.agency.newys.Data.articleDateOfPublicationNow;
-import static bootcamp.five.agency.newys.Data.articleDescription;
-import static bootcamp.five.agency.newys.Data.articleDetailsDto;
-import static bootcamp.five.agency.newys.Data.articleImageUrl;
-import static bootcamp.five.agency.newys.Data.articleTitle;
-import static bootcamp.five.agency.newys.Data.author;
-import static bootcamp.five.agency.newys.Data.authorId;
+import static bootcamp.five.agency.newys.unit.Data.article;
+import static bootcamp.five.agency.newys.unit.Data.articleContent;
+import static bootcamp.five.agency.newys.unit.Data.articleDateOfPublicationNow;
+import static bootcamp.five.agency.newys.unit.Data.articleDescription;
+import static bootcamp.five.agency.newys.unit.Data.articleDetailsDto;
+import static bootcamp.five.agency.newys.unit.Data.articleImageUrl;
+import static bootcamp.five.agency.newys.unit.Data.articleTitle;
+import static bootcamp.five.agency.newys.unit.Data.author;
+import static bootcamp.five.agency.newys.unit.Data.authorId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyLong;
@@ -20,6 +20,7 @@ import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponse
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import bootcamp.five.agency.newys.services.article.CreateArticleService;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

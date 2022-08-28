@@ -1,8 +1,10 @@
-package bootcamp.five.agency.newys.services.article;
+package bootcamp.five.agency.newys.unit.services.article;
 
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
+import bootcamp.five.agency.newys.services.article.DeleteArticleService;
+import bootcamp.five.agency.newys.services.article.GetArticleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Optional;
@@ -10,7 +12,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static bootcamp.five.agency.newys.Data.*;
+import static bootcamp.five.agency.newys.unit.Data.*;
 
 public class DeleteArticleServiceTest {
 
