@@ -1,9 +1,10 @@
-package bootcamp.five.agency.newys.services.author;
+package bootcamp.five.agency.newys.integration.services.author;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

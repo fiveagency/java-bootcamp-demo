@@ -1,4 +1,4 @@
-package bootcamp.five.agency.newys.services.category;
+package bootcamp.five.agency.newys.integration.services.category;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -11,6 +11,10 @@ import bootcamp.five.agency.newys.dto.response.category.GetCategoryDetailsRespon
 import bootcamp.five.agency.newys.services.article.CreateArticleService;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.GetAuthorService;
+import bootcamp.five.agency.newys.services.category.CreateCategoryService;
+import bootcamp.five.agency.newys.services.category.GetAddedArticlesService;
+import bootcamp.five.agency.newys.services.category.GetCategoryService;
+import bootcamp.five.agency.newys.services.category.UpdateCategoryService;
 import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;

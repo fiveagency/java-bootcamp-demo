@@ -1,8 +1,11 @@
-package bootcamp.five.agency.newys.services.author;
+package bootcamp.five.agency.newys.integration.services.author;
 
 import static org.assertj.core.api.Assertions.assertThatException;
 
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.services.author.CreateAuthorService;
+import bootcamp.five.agency.newys.services.author.DeleteAuthorService;
+import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

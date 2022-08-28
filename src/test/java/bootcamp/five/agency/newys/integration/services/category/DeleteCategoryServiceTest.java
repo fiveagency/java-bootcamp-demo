@@ -1,4 +1,4 @@
-package bootcamp.five.agency.newys.services.category;
+package bootcamp.five.agency.newys.integration.services.category;
 
 import static org.assertj.core.api.Assertions.assertThatException;
 
@@ -6,6 +6,9 @@ import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.dto.response.category.GetAuthorCategoriesResponseDto;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.GetAuthorService;
+import bootcamp.five.agency.newys.services.category.CreateCategoryService;
+import bootcamp.five.agency.newys.services.category.DeleteCategoryService;
+import bootcamp.five.agency.newys.services.category.GetCategoryService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

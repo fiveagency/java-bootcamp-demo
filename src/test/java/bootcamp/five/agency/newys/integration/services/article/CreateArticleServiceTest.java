@@ -1,10 +1,11 @@
-package bootcamp.five.agency.newys.services.article;
+package bootcamp.five.agency.newys.integration.services.article;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponseDto;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.services.article.CreateArticleService;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import java.util.Date;

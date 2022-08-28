@@ -1,9 +1,12 @@
-package bootcamp.five.agency.newys.services.article;
+package bootcamp.five.agency.newys.integration.services.article;
 
 import static org.assertj.core.api.Assertions.assertThatException;
 
 import bootcamp.five.agency.newys.dto.response.article.GetAuthorArticlesResponseDto;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.services.article.CreateArticleService;
+import bootcamp.five.agency.newys.services.article.DeleteArticleService;
+import bootcamp.five.agency.newys.services.article.GetArticleService;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import java.util.Date;
