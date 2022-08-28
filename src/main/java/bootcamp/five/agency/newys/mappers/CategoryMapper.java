@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class CategoryMapper {
 
   public GetCategoryDetailsResponseDto convertToGetCategoryDetailsResponseDto(Category category) {
-    return new GetCategoryDetailsResponseDto.GetCategoryDetailsResponseDtoBuilder()
+    return GetCategoryDetailsResponseDto.builder()
         .id(category.getId())
         .name(category.getName())
         .description(category.getDescription())
@@ -19,7 +19,7 @@ public class CategoryMapper {
   }
 
   public GetAuthorCategoriesResponseDto convertToGetCategoryDetailsResponseDto(Category category, Author author) {
-    return new GetAuthorCategoriesResponseDto.GetAuthorCategoriesResponseDtoBuilder()
+    return GetAuthorCategoriesResponseDto.builder()
         .id(category.getId())
         .name(category.getName())
         .description(category.getDescription())

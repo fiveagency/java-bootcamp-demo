@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class AuthorMapper {
 
   public AuthorDetailsResponseDto convertToGetAuthorDetailsResponseDto(Author author) {
-    return new AuthorDetailsResponseDto.GetAuthorDetailsResponseDtoBuilder()
+    return AuthorDetailsResponseDto.builder()
         .id(author.getId())
         .firstName(author.getFirstName())
         .lastName(author.getLastName())

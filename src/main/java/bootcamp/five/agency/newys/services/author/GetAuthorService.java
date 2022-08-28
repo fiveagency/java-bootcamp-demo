@@ -4,7 +4,7 @@ import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.exceptions.AuthorNotFoundException;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,13 +45,13 @@ public class GetAuthorService {
   public List<AuthorDetailsResponseDto> getByType(String type) {
     return Optional.ofNullable(authorRepository.findByType(type))
         .map(entities -> entities.stream().map(authorMapper::convertToGetAuthorDetailsResponseDto).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
   public List<AuthorDetailsResponseDto> getAll() {
     return Optional.of(authorRepository.findAll())
         .map(entities -> entities.stream().map(authorMapper::convertToGetAuthorDetailsResponseDto).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
 }

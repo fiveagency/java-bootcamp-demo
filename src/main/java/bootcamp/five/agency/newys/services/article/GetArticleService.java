@@ -10,7 +10,7 @@ import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,25 +43,25 @@ public class GetArticleService {
     return Optional.of(articleRepository.findByAuthor(author))
         .map(articles -> articles.stream().map(article ->
             articleMapper.convertToGetAuthorArticlesResponseDto(article, author)).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
   public List<GetLatestArticlesResponseDto> getLatestArticles() {
     return Optional.ofNullable(articleRepository.findByDateOfPublicationAfter(Date.valueOf(LocalDate.now().minusDays(7))))
         .map(entities -> entities.stream().map(articleMapper::convertToGetLatestArticlesResponseDto).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
   public List<GetPopularArticlesResponseDto> getPopularArticles() {
     return Optional.ofNullable(articleRepository.findByNumLikesGreaterThan(3))
         .map(entities -> entities.stream().map(articleMapper::convertToGetPopularArticlesResponseDto).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
   public List<GetArticleDetailsResponseDto> getAll() {
     return Optional.of(articleRepository.findAll())
         .map(entities -> entities.stream().map(articleMapper::convertToGetArticleDetailsResponseDto).collect(Collectors.toList()))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 
 }
