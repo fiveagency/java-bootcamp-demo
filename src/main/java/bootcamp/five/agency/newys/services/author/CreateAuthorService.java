@@ -4,7 +4,7 @@ import bootcamp.five.agency.newys.domain.Author;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
 import bootcamp.five.agency.newys.mappers.AuthorMapper;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
-import java.util.ArrayList;
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +22,13 @@ public class CreateAuthorService {
   }
 
   public AuthorDetailsResponseDto createAuthor(String firstName, String lastName, String email, String type) {
-    return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.save(new Author.AuthorBuilder()
+    return authorMapper.convertToGetAuthorDetailsResponseDto(authorRepository.save(Author.builder()
         .firstName(firstName)
         .lastName(lastName)
         .email(email)
         .type(type)
-        .articles(new ArrayList<>())
-        .categories(new ArrayList<>())
+        .articles(Collections.emptyList())
+        .categories(Collections.emptyList())
         .build()));
   }
 

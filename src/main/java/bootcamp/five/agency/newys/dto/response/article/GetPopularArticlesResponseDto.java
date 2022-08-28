@@ -33,6 +33,10 @@ public class GetPopularArticlesResponseDto {
     return numLikes;
   }
 
+  public static GetPopularArticlesResponseDtoBuilder builder() {
+    return new GetPopularArticlesResponseDtoBuilder();
+  }
+
   public static class GetPopularArticlesResponseDtoBuilder {
 
     private Long id;

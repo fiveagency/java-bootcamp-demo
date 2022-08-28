@@ -104,6 +104,10 @@ public class Article {
     return categories;
   }
 
+  public static ArticleBuilder builder() {
+    return new ArticleBuilder();
+  }
+
   public static class ArticleBuilder {
 
     private Long id;

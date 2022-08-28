@@ -6,7 +6,7 @@ import bootcamp.five.agency.newys.dto.response.article.GetArticleDetailsResponse
 import bootcamp.five.agency.newys.mappers.ArticleMapper;
 import bootcamp.five.agency.newys.repository.ArticleRepository;
 import bootcamp.five.agency.newys.repository.AuthorRepository;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class CreateArticleService {
     Author author = authorRepository.findById(authorId)
         .orElseThrow(() -> new IllegalStateException("Author does not exists"));
 
-    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(new Article.ArticleBuilder()
+    return articleMapper.convertToGetArticleDetailsResponseDto(articleRepository.save(Article.builder()
         .title(title)
         .description(description)
         .imageUrl(imageUrl)
@@ -37,7 +37,7 @@ public class CreateArticleService {
         .content(content)
         .numLikes(0)
         .author(author)
-        .categories(new ArrayList<>())
+        .categories(Collections.emptyList())
         .build()));
   }
 

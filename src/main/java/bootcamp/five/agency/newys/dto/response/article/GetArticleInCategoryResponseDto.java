@@ -39,6 +39,10 @@ public class GetArticleInCategoryResponseDto {
     return categoryName;
   }
 
+  public static GetArticleInCategoryResponseDtoBuilder builder() {
+    return new GetArticleInCategoryResponseDtoBuilder();
+  }
+
   public static class GetArticleInCategoryResponseDtoBuilder {
 
     private Long id;

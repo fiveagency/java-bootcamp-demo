@@ -353,19 +353,9 @@ public class Data {
 
     public static final List<AuthorDetailsResponseDto> allAuthorsDto = List.of(authorDetailsDto, authorDetailsDto2);
 
-    public static final CreateAuthorRequestDto createAuthorRequestDto = new CreateAuthorRequestDto.CreateAuthorRequestDtoBuilder()
-            .firstName(authorFirstName)
-            .lastName(authorLastName)
-            .email(authorEmail)
-            .type(authorType)
-            .build();
+    public static final CreateAuthorRequestDto createAuthorRequestDto = new CreateAuthorRequestDto(authorFirstName, authorLastName, authorEmail, authorType);
 
-    public static final UpdateAuthorRequestDto updateAuthorRequestDto = new UpdateAuthorRequestDto.UpdateAuthorRequestDtoBuilder()
-            .firstName(authorFirstName)
-            .lastName(authorLastName)
-            .email(authorEmail)
-            .type(authorType)
-            .build();
+    public static final UpdateAuthorRequestDto updateAuthorRequestDto = new UpdateAuthorRequestDto(authorFirstName, authorLastName, authorEmail, authorType);
 
     public static final GetCategoryDetailsResponseDto categoryDto = new GetCategoryDetailsResponseDto.GetCategoryDetailsResponseDtoBuilder()
             .id(categoryId)
