@@ -1,8 +1,15 @@
 package bootcamp.five.agency.newys.dto.request.author;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class CreateAuthorRequestDto {
 
+  @NotBlank(message = "First name can't be blank")
+  @Size(min = 0, max = 20, message = "First name can't be longer than 20 characters")
   private String firstName;
+  @NotBlank(message = "Last name name can't be blank")
   private String lastName;
   private String email;
   private String type;
@@ -16,6 +23,7 @@ public class CreateAuthorRequestDto {
     this.email = email;
     this.type = type;
   }
+
 
   public String getFirstName() {
     return firstName;
