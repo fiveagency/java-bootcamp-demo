@@ -1,15 +1,19 @@
 package bootcamp.five.agency.newys.example.service;
 
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.function.Executable;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import bootcamp.five.agency.newys.example.model.ProductAvailability;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 // Unit test without including Spring contextB
 public class ProductAvailabilityTest {
 
-    //private ProductAvailability productAvailability;
+    private ProductAvailabilityService productAvailabilityService;
 
     @BeforeAll
     public static void setupForAll() {
@@ -19,7 +23,8 @@ public class ProductAvailabilityTest {
     @BeforeEach
     public void setup() {
         // setup, executed before each test case
-        //productAvailability = new ProductAvailability(100);
+
+        productAvailabilityService = new ProductAvailabilityService();
     }
 
     @AfterEach
@@ -36,9 +41,10 @@ public class ProductAvailabilityTest {
 
         // Initialize object to use in test
         ProductAvailability productAvailability = new ProductAvailability(100);
+        int newQuantity = 70;
 
-        productAvailability.setQuantity(70);
-        assertEquals(70, productAvailability.getQuantity());
+        productAvailabilityService.setNewQuantity(productAvailability, newQuantity);
+        assertEquals(newQuantity, productAvailability.getQuantity());
     }
 
     @Test
@@ -47,8 +53,7 @@ public class ProductAvailabilityTest {
         // Initialize object to use in test
         ProductAvailability productAvailability = new ProductAvailability(100);
 
-        Executable settingQuantity = () -> productAvailability.setQuantity(-6);
-        assertThrows(IllegalArgumentException.class, settingQuantity);
+        assertThrows(IllegalArgumentException.class, () -> productAvailabilityService.setNewQuantity(productAvailability, -6));
     }
 
     @Test
@@ -56,9 +61,7 @@ public class ProductAvailabilityTest {
 
         // Initialize object to use in test
         ProductAvailability productAvailability = new ProductAvailability(100);
-
-        Executable settingQuantity = () -> productAvailability.setQuantity(130);
-        assertThrows(IllegalArgumentException.class, settingQuantity);
+        assertThrows(IllegalArgumentException.class, () -> productAvailabilityService.setNewQuantity(productAvailability, 130));
     }
 
     @Test
@@ -66,10 +69,9 @@ public class ProductAvailabilityTest {
 
         // Initialize object to use in test
         ProductAvailability productAvailability = new ProductAvailability(100);
-        productAvailability.setQuantity(85);
+        productAvailabilityService.setNewQuantity(productAvailability, 85);
 
-        Executable settingQuantity = () -> productAvailability.setQuantity(130);
-        assertThrows(IllegalArgumentException.class, settingQuantity);
+        assertThrows(IllegalArgumentException.class, () -> productAvailabilityService.setNewQuantity(productAvailability, 130));
 
         assertEquals(85, productAvailability.getQuantity());
     }

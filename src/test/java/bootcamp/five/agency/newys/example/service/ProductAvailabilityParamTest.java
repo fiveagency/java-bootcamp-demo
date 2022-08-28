@@ -1,13 +1,16 @@
 package bootcamp.five.agency.newys.example.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import bootcamp.five.agency.newys.example.model.ProductAvailability;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public class ProductAvailabilityParamTest {
+
+    private final ProductAvailabilityService productAvailabilityService = new ProductAvailabilityService();
 
     @ParameterizedTest
     @CsvSource({
@@ -20,7 +23,7 @@ public class ProductAvailabilityParamTest {
         // Initialize object to use in test
         ProductAvailability productAvailability = new ProductAvailability(initialQuantity);
 
-        productAvailability.setQuantity(newQuantity);
+        productAvailabilityService.setNewQuantity(productAvailability, newQuantity);
         assertEquals(expectedValue, productAvailability.getQuantity());
     }
 
@@ -34,7 +37,7 @@ public class ProductAvailabilityParamTest {
         // Initialize object to use in test
         ProductAvailability productAvailability = new ProductAvailability(initialQuantity);
 
-        Executable settingQuantity = () -> productAvailability.setQuantity(newQuantity);
+        Executable settingQuantity = () -> productAvailabilityService.setNewQuantity(productAvailability, newQuantity);
         assertThrows(IllegalArgumentException.class, settingQuantity);
     }
 }
