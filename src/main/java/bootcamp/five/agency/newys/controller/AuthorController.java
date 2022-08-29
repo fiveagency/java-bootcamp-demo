@@ -73,8 +73,10 @@ public class AuthorController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "Invalid request body",
-                    content = { @Content(mediaType = "application/json") }) })
+            @ApiResponse(responseCode = "201", description = "Created an author", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = AuthorDetailsResponseDto.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid request body", content = { @Content(mediaType = "application/json") })
+        }
+    )
     @PostMapping("/author/create")
     public ResponseEntity<AuthorDetailsResponseDto> createAuthor(@Valid @RequestBody CreateAuthorRequestDto author) {
         AuthorDetailsResponseDto createdAuthor = createAuthorService.createAuthor(author.getFirstName(), author.getLastName(), author.getEmail(), author.getType());
