@@ -293,14 +293,14 @@ Here is an example of good and poorly indented messages when throwing an excepti
 ```
 // Avoid - not easy to read
 throw new IllegalStateException("Failed to process request" + request.getId()
-  + " for user " + user.getId() + " query: '" + query.getText()
+  + " for appUser " + appUser.getId() + " query: '" + query.getText()
   + "'");
 ```
 ```
 // Prefer - easier to read
 throw new IllegalStateException("Failed to process"
   + " request " + request.getId()
-  + " for user " + user.getId()
+  + " for appUser " + appUser.getId()
   + " query: '" + query.getText() + "'");
 ```
 ***Declarations and Assignments***
@@ -452,7 +452,7 @@ that will take care of creating that object for us.
 If we create builder class inside of class for which we create builder, builder class **has to be public static class**.
 
 If we create some object using the builder pattern, all constructors used in **builder class have to be private** - this way we prevent
-user from using constructor and force him to use the builder.
+appUser from using constructor and force him to use the builder.
 
 If we use builder pattern, we can provide access to builder class over static method, like this:
 * i.e. we have Article class
