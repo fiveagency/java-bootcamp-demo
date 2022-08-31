@@ -3,14 +3,18 @@ package bootcamp.five.agency.newys.controller;
 import bootcamp.five.agency.newys.dto.request.author.CreateAuthorRequestDto;
 import bootcamp.five.agency.newys.dto.request.author.UpdateAuthorRequestDto;
 import bootcamp.five.agency.newys.dto.response.author.AuthorDetailsResponseDto;
+import bootcamp.five.agency.newys.security.UserPrincipal;
 import bootcamp.five.agency.newys.services.author.CreateAuthorService;
 import bootcamp.five.agency.newys.services.author.DeleteAuthorService;
 import bootcamp.five.agency.newys.services.author.GetAuthorService;
 import bootcamp.five.agency.newys.services.author.UpdateAuthorService;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +39,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthorController {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private final GetAuthorService getAuthorService;
     private final CreateAuthorService createAuthorService;
     private final UpdateAuthorService updateAuthorService;
@@ -55,8 +61,16 @@ public class AuthorController {
 //    It contains mechanisms of serialization and de-serialization.
 //    In DTO, we can store data from a single source or from multiple resources.
 //    We can either store complete data or can store a small amount of data from a source.
+//    @RequestMapping (value = "/authors", method = RequestMethod.GET) //same as @GetMapping
+//    public ResponseEntity<List<AuthorDetailsResponseDto>> getAuthors() {  //DTO: https://www.baeldung.com/java-dto-pattern
+//        return ResponseEntity.ok(getAuthorService.getAll());
+//    }
+
+
+
     @RequestMapping (value = "/authors", method = RequestMethod.GET) //same as @GetMapping
-    public ResponseEntity<List<AuthorDetailsResponseDto>> getAuthors() {  //DTO: https://www.baeldung.com/java-dto-pattern
+    public ResponseEntity<List<AuthorDetailsResponseDto>> getAuthors(@AuthenticationPrincipal UserPrincipal principal) {  //DTO: https://www.baeldung.com/java-dto-pattern
+        logger.info("User that is requesting authors is {}", principal.getUsername());
         return ResponseEntity.ok(getAuthorService.getAll());
     }
 
