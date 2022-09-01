@@ -480,3 +480,12 @@ When working with Lambda expressions, Java introduced _method references_: https
 Avoid `...someLambda(parameter -> SomeUtilClass.someStaticMethod(parameter)`, instead use `...someLambda(SomeUtilClass::someStaticMethod)`.
 
 Similarly, avoid `...someLambda(parameter -> someService.someMethod(parameter)`, instead use `...someLambda(someService::someMethod)`.
+
+**Working with dates in Java**
+
+When working with dates and times in Java, use new Date Time API introduced in Java 8.
+
+Avoid using `java.util.Date`, `java.util.Calendar` and `java.util.Timezone` classes, instead use classes from `java.time.*` package,
+i.e. `java.util.time.LocalDate`, `java.util.time.LocalDateTime` etc.
+
+Link: https://www.baeldung.com/migrating-to-java-8-date-time-api
